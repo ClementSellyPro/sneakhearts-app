@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { User, Heart, ShoppingCart } from "lucide-react";
 
-const Header = () => {
+export default function Header() {
   return (
     <header className="flex items-center justify-between px-12 bg-white w-full">
       <Image
@@ -29,6 +29,4 @@ const Header = () => {
       </div>
     </header>
   );
-};
-
-export default Header;
+}
