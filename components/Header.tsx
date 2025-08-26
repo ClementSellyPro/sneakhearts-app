@@ -26,7 +26,10 @@ export default function Header() {
         </ul>
       </nav>
       <div className="flex items-center gap-4">
-        <User className="icon-item" />
+        <Link href={"/login"}>
+          <User className="icon-item" />
+        </Link>
+
         <Heart className="icon-item" />
         <ShoppingCart className="icon-item" />
       </div>
