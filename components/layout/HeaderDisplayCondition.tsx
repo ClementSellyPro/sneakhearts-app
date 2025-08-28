@@ -5,6 +5,6 @@ import Header from "./Header";
 
 export default function HeaderDisplayCondition() {
   const pathname = usePathname();
-  if (pathname === "/login") return null;
+  if (pathname === "/login" || pathname === "/register") return null;
   return <Header />;
 }

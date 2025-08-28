@@ -26,7 +26,7 @@ export default function Header() {
         </ul>
       </nav>
       <div className="flex items-center gap-4">
-        <Link href={"/login"}>
+        <Link href={"/register"}>
           <User className="icon-item" />
         </Link>
 

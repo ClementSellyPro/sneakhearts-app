@@ -1,14 +1,18 @@
+import Button from "@/components/ui/Button";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Login() {
   return (
     <div className="flex flex-col items-center gap-4 p-4 h-full">
-      <Image
-        src={"/logo/logo_sneakhearts_full.svg"}
-        width={244}
-        height={67}
-        alt="Sneakhearts logo"
-      />
+      <Link href={"/"}>
+        <Image
+          src={"/logo/logo_sneakhearts_full.svg"}
+          width={244}
+          height={67}
+          alt="Sneakhearts logo"
+        />
+      </Link>
 
       <div className="flex flex-col gap-8 pt-36 w-[500px]">
         <div className=" flex flex-col items-center w-full text-3xl">
@@ -28,11 +32,16 @@ export default function Login() {
               aux{" "}
               <span className="underline">Conditions d&apos;utilisation</span>.
             </p>
-            <button className="px-8 py-1.5 rounded-full text-lg bg-black text-white hover:brightness-80 cursor-pointer">
-              Continuer
-            </button>
+            <Button>Continuer</Button>
           </div>
         </form>
+
+        <p className="text-center pt-8">
+          Pas encore de compte ?{" "}
+          <Link className="font-bold text-lg text-amber-500" href={"/login"}>
+            Créer un compte
+          </Link>
+        </p>
       </div>
     </div>
   );
