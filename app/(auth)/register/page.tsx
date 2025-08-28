@@ -4,7 +4,7 @@ import RegisterForm from "@/components/auth/RegisterForm";
 export default function Register() {
   return (
     <AuthLayout
-      title="Connecter vous"
+      title="Se connecter"
       alternativeAction={{
         text: "Pas encore de compte ?",
         linkText: "S'inscrire",
