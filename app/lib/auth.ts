@@ -13,6 +13,7 @@ export const auth = betterAuth({
   },
 
   session: {
+    cookieName: "session",
     expiresIn: 60 * 60 * 24,
   },
 });

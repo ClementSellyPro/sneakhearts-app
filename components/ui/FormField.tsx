@@ -4,6 +4,7 @@ interface FormFieldProps {
   label: string;
   type: string;
   name: string;
+  value?: string;
   error?: string;
   required?: boolean;
   onChange?: ChangeEventHandler<HTMLInputElement>;
@@ -13,6 +14,7 @@ export function FormField({
   label,
   type,
   name,
+  value,
   error,
   required,
   onChange,
@@ -27,6 +29,7 @@ export function FormField({
         type={type}
         name={name}
         onChange={onChange}
+        value={value}
         className={`w-full px-3 py-2 outline-none border rounded-md focus:border-amber-500 ${
           error ? "border-red-500" : "border-gray-300"
         }`}

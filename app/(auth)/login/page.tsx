@@ -4,10 +4,10 @@ import LoginForm from "@/components/auth/LoginForm";
 export default function Login() {
   return (
     <AuthLayout
-      title="Créer un compte"
+      title="Se connecter"
       alternativeAction={{
-        text: "Déjà inscrit ?",
-        linkText: "Se connecter",
+        text: "Pas encore de compte ?",
+        linkText: "S'inscrire'",
         href: "/register",
       }}
     >

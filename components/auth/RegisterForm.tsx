@@ -15,16 +15,17 @@ export default function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  async function onSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
     try {
+      //eslint-disable-next-line
       const { data, error } = await authClient.signUp.email(
         {
           email,
           password,
-          name: name || "Nouvelle Utilisateur",
+          name: name,
           callbackURL: "/",
         },
         {
@@ -51,12 +52,22 @@ export default function RegisterForm() {
   }
 
   return (
-    <form className="flex flex-col gap-6">
+    <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
+      <FormField
+        onChange={(e) => setName(e.target.value)}
+        label="Nom:"
+        type="text"
+        name="name"
+        value={name}
+        error=""
+        required
+      />
       <FormField
         onChange={(e) => setEmail(e.target.value)}
         label="Adresse e-mail:"
         type="email"
         name="email"
+        value={email}
         error=""
         required
       />
@@ -65,16 +76,20 @@ export default function RegisterForm() {
         label="Mot de passe:"
         type="password"
         name="password"
+        value={password}
         error=""
         required
       />
+
+      {error && <div className="text-red-500 text-sm">{error}</div>}
+
       <div className="flex justify-between text-xs w-full">
         <p className="w-3/5">
           En continuant, j&apos;accepte la{" "}
           <span className="underline">Politique de confidentialité</span> et aux{" "}
           <span className="underline">Conditions d&apos;utilisation</span>.
         </p>
-        <Button onClick={(e) => onSubmit(e)}>Continuer</Button>
+        <Button type="submit">{isLoading ? "Création..." : "Continuer"}</Button>
       </div>
     </form>
   );
