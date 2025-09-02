@@ -31,7 +31,9 @@ export default function Header() {
         </Link>
 
         <Heart className="icon-item" />
-        <ShoppingCart className="icon-item" />
+        <Link href={"/cart"}>
+          <ShoppingCart className="icon-item" />
+        </Link>
       </div>
     </header>
   );
