@@ -39,7 +39,7 @@ export default function RegisterForm() {
           onSuccess: (ctx) => {
             console.log("Inscription réussie !", ctx.data);
             setIsLoading(false);
-            router.push("/");
+            router.push("/login");
           },
         }
       );
