@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Button from "../ui/Button";
 import { FormField } from "../ui/FormField";
-import { authClient } from "@/app/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
 import { ErrorContext } from "better-auth/react";
 import { useRouter } from "next/navigation";
 

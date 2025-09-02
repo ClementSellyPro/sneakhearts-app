@@ -19,6 +19,7 @@ body {
 }
 
 @layer components {
+  /* Header */
   .nav-list {
     @apply flex gap-12;
   }
@@ -29,5 +30,22 @@ body {
 
   .icon-item {
     @apply cursor-pointer hover:opacity-60;
+  }
+
+  /* Footer */
+  .footer-group {
+    @apply flex flex-col gap-4;
+  }
+
+  .footer-title {
+    @apply font-bold;
+  }
+
+  .footer-items {
+    @apply text-sm flex flex-col gap-4;
+  }
+
+  .footer-items li {
+    @apply cursor-pointer;
   }
 }

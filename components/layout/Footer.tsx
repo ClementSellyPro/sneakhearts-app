@@ -5,23 +5,23 @@ export default function Footer() {
     <footer className="bg-black text-white w-full px-14">
       <div className="flex items-start justify-between pt-8 pb-14 w-full">
         <div className="flex gap-32">
-          <div className="flex flex-col gap-4">
-            <h2 className="font-bold">PRODUITS</h2>
-            <ul className="text-sm flex flex-col gap-4">
+          <div className="footer-group">
+            <h2 className="footer-title">PRODUITS</h2>
+            <ul className="footer-items">
               <li>Chaussures</li>
               <li>Vêtements</li>
             </ul>
           </div>
-          <div className="flex flex-col gap-4">
-            <h2 className="font-bold">ENTREPRISE</h2>
-            <ul className="text-sm flex flex-col gap-4">
+          <div className="footer-group">
+            <h2 className="footer-title">ENTREPRISE</h2>
+            <ul className="footer-items">
               <li>À propos de Sneakhearts</li>
               <li>Votre carrière chez Sneakhearts</li>
             </ul>
           </div>
-          <div className="flex flex-col gap-4">
-            <h2 className="font-bold">AIDE</h2>
-            <ul className="text-sm flex flex-col gap-4">
+          <div className="footer-group">
+            <h2 className="footer-title">AIDE</h2>
+            <ul className="footer-items">
               <li>Suivi commande</li>
               <li>Livraison et retours</li>
               <li>Service client</li>
