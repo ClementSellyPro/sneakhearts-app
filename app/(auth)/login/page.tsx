@@ -7,7 +7,7 @@ export default function Login() {
       title="Se connecter"
       alternativeAction={{
         text: "Pas encore de compte ?",
-        linkText: "S'inscrire'",
+        linkText: "S'inscrire",
         href: "/register",
       }}
     >
