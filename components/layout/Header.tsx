@@ -21,7 +21,9 @@ export default function Header() {
             Nouveauté
             <div className="w-2 h-2 rounded-full bg-red-600 absolute -right-4 top-3"></div>
           </li>
-          <li className="nav-item">Chaussures</li>
+          <Link href={"/chaussure"}>
+            <li className="nav-item">Chaussures</li>
+          </Link>
           <li className="nav-item">Vêtements</li>
         </ul>
       </nav>
