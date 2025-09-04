@@ -52,6 +52,7 @@ export default function ItemCard() {
         <div className="hidden group-hover:block">
           <ItemMiniatureVariation
             items={nike}
+            currentImage={currentImage}
             setCurrentImage={setCurrentImage}
           />
         </div>
