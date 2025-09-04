@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Filter from "@/components/items-page/Filter";
+import Image from "next/image";
 
 export default function HeaderItemsPage() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -16,9 +17,15 @@ export default function HeaderItemsPage() {
       </h1>
       <button
         onClick={onToggleFilter}
-        className="px-4 py-2 bg-[#f7f7f7] border cursor-pointer hover:bg-gray-200"
+        className="flex gap-2 px-4 py-2 border cursor-pointer hover:bg-gray-100"
       >
-        Filtrer et trier
+        <span>Filtrer et trier</span>
+        <Image
+          src={"/icon/arrow_down.svg"}
+          alt="Fleche trier"
+          width={20}
+          height={20}
+        />
       </button>
       {isFilterOpen && <Filter setIsOpen={setIsFilterOpen} />}
     </div>
