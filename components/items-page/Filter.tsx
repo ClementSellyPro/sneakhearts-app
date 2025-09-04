@@ -12,7 +12,7 @@ export default function Filter({ setIsOpen }: filterProps) {
   }
 
   return (
-    <div onClick={toggleOpenFilter} className="fixed inset-0 bg-black/25">
+    <div onClick={toggleOpenFilter} className="fixed inset-0 bg-black/25 z-20">
       <div
         className="fixed top-0 right-0 w-2/6"
         onClick={(e) => e.stopPropagation()}
