@@ -4,6 +4,12 @@ import { useState } from "react";
 import Button from "../ui/Button";
 import { FormField } from "../ui/FormField";
 import { authClient } from "@/lib/auth-client";
+import * as z from "zod";
+
+const UserLog = z.object({
+  email: z.email(),
+  password: z.string(),
+});
 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -13,23 +19,29 @@ export default function LoginForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setIsLoading(true);
+
+    const validation = UserLog.safeParse({
+      email,
+      password,
+    });
+
+    if (!validation.success) {
+      setIsLoading(false);
+      return;
+    }
+
     try {
       //eslint-disable-next-line
-      const { data, error } = await authClient.signIn.email(
-        {
-          email,
-          password,
-          callbackURL: "/",
-          /**
-           * remember the user session after the browser is closed.
-           * @default true
-           */
-          rememberMe: false,
-        },
-        {
-          //callbacks
-        }
-      );
+      const { data, error } = await authClient.signIn.email({
+        email,
+        password,
+        callbackURL: "/",
+        /**
+         * remember the user session after the browser is closed.
+         * @default true
+         */
+        rememberMe: false,
+      });
     } catch {
     } finally {
       setIsLoading(false);

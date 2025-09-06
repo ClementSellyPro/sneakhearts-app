@@ -6,19 +6,59 @@ import { FormField } from "../ui/FormField";
 import { authClient } from "@/lib/auth-client";
 import { ErrorContext } from "better-auth/react";
 import { useRouter } from "next/navigation";
+import * as z from "zod";
 
 export default function RegisterForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<{
+    name?: string;
+    email?: string;
+    password?: string;
+  }>({});
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  const UserLog = z.object({
+    name: z.string().min(2, "Le nom doit contenir au moins 3 caractères"),
+    email: z.string().email("Adresse e-mail invalide"),
+    password: z
+      .string()
+      .min(6, "Le mot de passe doit contenir au moins 6 caractères"),
+  });
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
+
+    const validation = UserLog.safeParse({
+      name,
+      email,
+      password,
+    });
+
+    if (!validation.success) {
+      const fieldErrors: { name?: string; email?: string; password?: string } =
+        {};
+
+      validation.error.issues.forEach((err) => {
+        if (err.path[0] === "name") {
+          fieldErrors.name = err.message;
+        } else if (err.path[0] === "email") {
+          fieldErrors.email = err.message;
+        } else if (err.path[0] === "password") {
+          fieldErrors.password = err.message;
+        }
+      });
+
+      setErrors(fieldErrors);
+      setIsLoading(false);
+      return;
+    }
+
     try {
       //eslint-disable-next-line
       const { data, error } = await authClient.signUp.email(
@@ -39,7 +79,7 @@ export default function RegisterForm() {
           onSuccess: (ctx) => {
             console.log("Inscription réussie !", ctx.data);
             setIsLoading(false);
-            router.push("/login");
+            router.push("/");
           },
         }
       );
@@ -59,7 +99,7 @@ export default function RegisterForm() {
         type="text"
         name="name"
         value={name}
-        error=""
+        error={errors.name || ""}
         required
       />
       <FormField
@@ -68,7 +108,7 @@ export default function RegisterForm() {
         type="email"
         name="email"
         value={email}
-        error=""
+        error={errors.email || ""}
         required
       />
       <FormField
@@ -77,7 +117,7 @@ export default function RegisterForm() {
         type="password"
         name="password"
         value={password}
-        error=""
+        error={errors.password || ""}
         required
       />
 
