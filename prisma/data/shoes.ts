@@ -1,8 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { SeedProduct } from "../types";
 
-const prisma = new PrismaClient();
-
-const productsData = [
+export const shoesProducts: SeedProduct[] = [
   {
     productId: "react-vision",
     name: "Nike React Vision",
@@ -609,101 +607,128 @@ const productsData = [
       },
     ],
   },
-
-  // CLOTHING CATEGORY
   {
-    productId: "adidas-t-shirt-power-oversize",
-    name: "T-Shirt Power Oversize",
-    brand: "Adidas",
-    basePrice: 29.99,
-    category: "clothing",
-    gender: "Male",
+    productId: "air-force-lx",
+    name: "Nike Air Force 1",
+    brand: "Nike",
+    basePrice: 129.99,
+    category: "Shoes",
+    gender: "Female",
     variations: [
       {
-        id: "power-oversize-blue",
-        colorway: "Bleu",
-        price: 29.99,
-        salePrice: 24.99,
-        thumbnailUrl:
-          "/clothing/thumbnails/T-shirt_Power_Oversize_Bleu_JV9685_sm.webp",
-        largeUrl: "/clothing/large/T-shirt_Power_Oversize_Bleu_JV9685.webp",
-        alt: "Adidas T-Shirt Power Oversize Bleu",
+        id: "air-force-lx-white",
+        colorway: "Blanc",
+        price: 129.99,
+        salePrice: null,
+        thumbnailUrl: "/sneakers/thumbnails/AIR_FORCE_1_'07_LX_sm.webp",
+        largeUrl: "/sneakers/large/AIR_FORCE_1_'07_LX.webp",
+        alt: "Nike Air Force 1 Blanc",
         sizes: [
-          { size: "XS", inStock: true, quantity: 12 },
-          { size: "S", inStock: true, quantity: 25 },
-          { size: "M", inStock: true, quantity: 30 },
-          { size: "L", inStock: true, quantity: 22 },
-          { size: "XL", inStock: true, quantity: 15 },
-          { size: "XXL", inStock: true, quantity: 8 },
+          { size: "38", inStock: true, quantity: 3 },
+          { size: "39", inStock: false, quantity: 1 },
+          { size: "40", inStock: true, quantity: 8 },
+          { size: "41", inStock: true, quantity: 10 },
+          { size: "42", inStock: true, quantity: 4 },
+          { size: "43", inStock: true, quantity: 11 },
+          { size: "44", inStock: true, quantity: 4 },
+          { size: "45", inStock: true, quantity: 6 },
+          { size: "46", inStock: false, quantity: 1 },
+          { size: "47", inStock: true, quantity: 0 },
         ],
       },
+    ],
+  },
+  {
+    productId: "air-force-07",
+    name: "Nike Air Force 1",
+    brand: "Nike",
+    basePrice: 129.99,
+    category: "Shoes",
+    gender: "Female",
+    variations: [
       {
-        id: "power-oversize-black",
-        colorway: "Noir",
-        price: 29.99,
-        salePrice: 24.99,
-        thumbnailUrl:
-          "/clothing/thumbnails/T-shirt_Power_Oversize_Noir_JN3680_sm.webp",
-        largeUrl: "/clothing/large/T-shirt_Power_Oversize_Noir_JN3680.webp",
-        alt: "Adidas T-Shirt Power Oversize Noir",
+        id: "air-force-lx-white",
+        colorway: "Blanc",
+        price: 129.99,
+        salePrice: null,
+        thumbnailUrl: "/sneakers/thumbnails/AIR_FORCE_1_'07_sm.webp",
+        largeUrl: "/sneakers/large/AIR_FORCE_1_'07.webp",
+        alt: "Nike Air Force 1 Blanc",
         sizes: [
-          { size: "XS", inStock: true, quantity: 2 },
-          { size: "S", inStock: true, quantity: 18 },
-          { size: "M", inStock: true, quantity: 28 },
-          { size: "L", inStock: true, quantity: 27 },
-          { size: "XL", inStock: true, quantity: 15 },
-          { size: "XXL", inStock: true, quantity: 8 },
+          { size: "38", inStock: true, quantity: 1 },
+          { size: "39", inStock: false, quantity: 0 },
+          { size: "40", inStock: true, quantity: 8 },
+          { size: "41", inStock: true, quantity: 10 },
+          { size: "42", inStock: true, quantity: 4 },
+          { size: "43", inStock: true, quantity: 11 },
+          { size: "44", inStock: true, quantity: 4 },
+          { size: "45", inStock: true, quantity: 6 },
+          { size: "46", inStock: false, quantity: 1 },
+          { size: "47", inStock: true, quantity: 0 },
+        ],
+      },
+    ],
+  },
+  {
+    productId: "air-force-jewel",
+    name: "Nike Air Force 1",
+    brand: "Nike",
+    basePrice: 129.99,
+    category: "Shoes",
+    gender: "Female",
+    variations: [
+      {
+        id: "air-force-jewel-white",
+        colorway: "Blanc",
+        price: 129.99,
+        salePrice: 119.99,
+        thumbnailUrl: "/sneakers/thumbnails/NIKE_AIR_FORCE_1_LO_PRM_sm.webp",
+        largeUrl: "/sneakers/large/NIKE_AIR_FORCE_1_LO_PRM.webp",
+        alt: "Nike Air Force 1 Blanc",
+        sizes: [
+          { size: "38", inStock: true, quantity: 0 },
+          { size: "39", inStock: false, quantity: 0 },
+          { size: "40", inStock: true, quantity: 8 },
+          { size: "41", inStock: true, quantity: 10 },
+          { size: "42", inStock: true, quantity: 4 },
+          { size: "43", inStock: true, quantity: 6 },
+          { size: "44", inStock: true, quantity: 4 },
+          { size: "45", inStock: true, quantity: 3 },
+          { size: "46", inStock: false, quantity: 0 },
+          { size: "47", inStock: true, quantity: 0 },
+        ],
+      },
+    ],
+  },
+  {
+    productId: "air-max-90-women",
+    name: "Nike Air Max 90",
+    brand: "Nike",
+    basePrice: 159.99,
+    category: "Shoes",
+    gender: "Female",
+    variations: [
+      {
+        id: "air-max-90-women-red",
+        colorway: "Rouge/Beige",
+        price: 159.99,
+        salePrice: 129.99,
+        thumbnailUrl: "/sneakers/thumbnails/AIR_MAX_90_sm.webp",
+        largeUrl: "/sneakers/large/AIR_MAX_90.webp",
+        alt: "Nike Air Max 90 Rouge/Beige",
+        sizes: [
+          { size: "38", inStock: true, quantity: 0 },
+          { size: "39", inStock: false, quantity: 1 },
+          { size: "40", inStock: true, quantity: 8 },
+          { size: "41", inStock: true, quantity: 10 },
+          { size: "42", inStock: true, quantity: 4 },
+          { size: "43", inStock: true, quantity: 11 },
+          { size: "44", inStock: true, quantity: 4 },
+          { size: "45", inStock: true, quantity: 6 },
+          { size: "46", inStock: false, quantity: 0 },
+          { size: "47", inStock: true, quantity: 0 },
         ],
       },
     ],
   },
 ];
-
-async function main() {
-  console.log("Seeding database...");
-
-  for (const productData of productsData) {
-    const { variations, ...product } = productData;
-
-    console.log(`Creating product: ${product.name}`);
-
-    const createdProduct = await prisma.product.create({
-      data: {
-        ...product,
-        variations: {
-          create: variations.map((variation) => {
-            const { sizes, ...variationData } = variation;
-            return {
-              ...variationData,
-              sizes: {
-                create: sizes,
-              },
-            };
-          }),
-        },
-      },
-      include: {
-        variations: {
-          include: {
-            sizes: true,
-          },
-        },
-      },
-    });
-
-    console.log(
-      `Created ${createdProduct.name} with ${createdProduct.variations.length} variations`
-    );
-  }
-
-  console.log("Seeding completed!");
-}
-
-main()
-  .catch((e) => {
-    console.error("Seeding failed:", e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });

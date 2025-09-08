@@ -65,3 +65,52 @@ model verification {
 
   @@map("verifications")
 }
+
+// models for the products
+model Product {
+  id        String   @id @default(cuid())
+  productId String   @unique
+  name      String
+  brand     String
+  basePrice Float
+  category  String
+  gender    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  variations ProductVariation[]
+  
+  @@map("products")
+}
+
+model ProductVariation {
+  id           String   @id @default(cuid())
+  colorway     String
+  price        Float
+  salePrice    Float?
+  thumbnailUrl String
+  largeUrl     String
+  alt          String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  sizes ProductSize[]
+  
+  @@map("product_variations")
+}
+
+model ProductSize {
+  id       String  @id @default(cuid())
+  size     String
+  inStock  Boolean
+  quantity Int
+  
+  variationId String
+  variation   ProductVariation @relation(fields: [variationId], references: [id], onDelete: Cascade)
+  
+  @@unique([variationId, size])
+  @@map("product_sizes")
+}
