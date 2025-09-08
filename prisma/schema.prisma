@@ -1,4 +1,3 @@
-// schema.prisma - Schéma officiel Better Auth
 generator client {
   provider = "prisma-client-js"
 }
