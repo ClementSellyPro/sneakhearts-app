@@ -1,4 +1,3 @@
-// prisma/data/clothing.ts
 import { SeedProduct } from "../types";
 
 export const clothingProducts: SeedProduct[] = [
