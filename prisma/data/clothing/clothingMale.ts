@@ -1,0 +1,321 @@
+import { SeedProduct } from "../../types";
+
+export const clothingMale: SeedProduct[] = [
+  {
+    productId: "adidas-t-shirt-power-oversize",
+    name: "T-Shirt Power Oversize",
+    brand: "Adidas",
+    basePrice: 29.99,
+    category: "clothing",
+    gender: "Male",
+    variations: [
+      {
+        id: "power-oversize-blue",
+        colorway: "Bleu",
+        price: 29.99,
+        salePrice: 24.99,
+        thumbnailUrl:
+          "/clothing/thumbnails/T-shirt_Power_Oversize_Bleu_JV9685_sm.webp",
+        largeUrl: "/clothing/large/T-shirt_Power_Oversize_Bleu_JV9685.webp",
+        alt: "Adidas T-Shirt Power Oversize Bleu",
+        sizes: [
+          { size: "XS", inStock: true, quantity: 12 },
+          { size: "S", inStock: true, quantity: 25 },
+          { size: "M", inStock: true, quantity: 30 },
+          { size: "L", inStock: true, quantity: 22 },
+          { size: "XL", inStock: true, quantity: 15 },
+          { size: "XXL", inStock: true, quantity: 8 },
+        ],
+      },
+      {
+        id: "power-oversize-black",
+        colorway: "Noir",
+        price: 29.99,
+        salePrice: 24.99,
+        thumbnailUrl:
+          "/clothing/thumbnails/T-shirt_Power_Oversize_Noir_JN3680_sm.webp",
+        largeUrl: "/clothing/large/T-shirt_Power_Oversize_Noir_JN3680.webp",
+        alt: "Adidas T-Shirt Power Oversize Noir",
+        sizes: [
+          { size: "XS", inStock: true, quantity: 2 },
+          { size: "S", inStock: true, quantity: 18 },
+          { size: "M", inStock: true, quantity: 28 },
+          { size: "L", inStock: true, quantity: 27 },
+          { size: "XL", inStock: true, quantity: 15 },
+          { size: "XXL", inStock: true, quantity: 8 },
+        ],
+      },
+    ],
+  },
+  {
+    productId: "real-madrid",
+    name: "Maillot Real Madrid",
+    brand: "Adidas",
+    basePrice: 99.99,
+    category: "clothing",
+    gender: "Male",
+    variations: [
+      {
+        id: "real-madrid-white",
+        colorway: "Blanc",
+        price: 99.99,
+        salePrice: null,
+        thumbnailUrl:
+          "/clothing/thumbnails/Maillot_domicile_Real_Madrid_25-26_Blanc_JJ1931_sm.jpg",
+        largeUrl:
+          "/clothing/large/Maillot_domicile_Real_Madrid_25-26_Blanc_JJ1931.jpg",
+        alt: "Maillot Real Madrid",
+        sizes: [
+          { size: "XS", inStock: false, quantity: 0 },
+          { size: "S", inStock: true, quantity: 25 },
+          { size: "M", inStock: true, quantity: 30 },
+          { size: "L", inStock: true, quantity: 22 },
+          { size: "XL", inStock: true, quantity: 15 },
+          { size: "XXL", inStock: true, quantity: 8 },
+        ],
+      },
+      {
+        id: "real-madrid-blue",
+        colorway: "Bleu",
+        price: 99.99,
+        salePrice: null,
+        thumbnailUrl:
+          "/clothing/thumbnails/Maillot_exterieur_Real_Madrid_25-26_Bleu_JJ4182_sm.webp",
+        largeUrl:
+          "/clothing/large/Maillot_exterieur_Real_Madrid_25-26_Bleu_JJ4182.webp",
+        alt: "Maillot Real Madrid Bleu",
+        sizes: [
+          { size: "XS", inStock: true, quantity: 2 },
+          { size: "S", inStock: true, quantity: 18 },
+          { size: "M", inStock: true, quantity: 28 },
+          { size: "L", inStock: true, quantity: 27 },
+          { size: "XL", inStock: true, quantity: 15 },
+          { size: "XXL", inStock: false, quantity: 0 },
+        ],
+      },
+    ],
+  },
+  {
+    productId: "mercedes-polo",
+    name: "Polo Mercedes - AMG",
+    brand: "Adidas",
+    basePrice: 99.99,
+    category: "clothing",
+    gender: "Male",
+    variations: [
+      {
+        id: "mercedes-polo-black",
+        colorway: "Noir",
+        price: 99.99,
+        salePrice: 89.99,
+        thumbnailUrl:
+          "/clothing/thumbnails/POLO_DEQUIPE_MERCEDES_Noir_JW5391_sm.jpg",
+        largeUrl: "/clothing/large/POLO_DEQUIPE_MERCEDES_Noir_JW5391.jpg",
+        alt: "Polo Mercedes - AMG",
+        sizes: [
+          { size: "XS", inStock: false, quantity: 0 },
+          { size: "S", inStock: true, quantity: 15 },
+          { size: "M", inStock: true, quantity: 30 },
+          { size: "L", inStock: true, quantity: 22 },
+          { size: "XL", inStock: true, quantity: 15 },
+          { size: "XXL", inStock: false, quantity: 0 },
+        ],
+      },
+    ],
+  },
+  {
+    productId: "baggy-adicolor",
+    name: "Pantalon de survêtement coupe Baggy Adicolor",
+    brand: "Adidas",
+    basePrice: 74.99,
+    category: "clothing",
+    gender: "Male",
+    variations: [
+      {
+        id: "baggy-adicolor-blue",
+        colorway: "Bleu",
+        price: 74.99,
+        salePrice: 54.99,
+        thumbnailUrl:
+          "/clothing/thumbnails/Pantalon_de_survetement_coupe_baggy_Adicolor_Firebird_Bleu_IZ2466_sm.webp",
+        largeUrl:
+          "/clothing/large/Pantalon_de_survetement_coupe_baggy_Adicolor_Firebird_Bleu_IZ2466.webp",
+        alt: "Pantalon de survêtement",
+        sizes: [
+          { size: "XS", inStock: true, quantity: 2 },
+          { size: "S", inStock: true, quantity: 17 },
+          { size: "M", inStock: true, quantity: 20 },
+          { size: "L", inStock: true, quantity: 12 },
+          { size: "XL", inStock: false, quantity: 0 },
+          { size: "XXL", inStock: true, quantity: 8 },
+        ],
+      },
+      {
+        id: "baggy-adicolor-brown",
+        colorway: "Marron",
+        price: 74.99,
+        salePrice: 54.99,
+        thumbnailUrl:
+          "/clothing/thumbnails/Pantalon_de_survetement_coupe_baggy_Adicolor_Firebird_Marron_JP1067_sm.webp",
+        largeUrl:
+          "/clothing/large/Pantalon_de_survetement_coupe_baggy_Adicolor_Firebird_Marron_JP1067.webp",
+        alt: "Pantalon de survêtement",
+        sizes: [
+          { size: "XS", inStock: true, quantity: 5 },
+          { size: "S", inStock: false, quantity: 0 },
+          { size: "M", inStock: true, quantity: 21 },
+          { size: "L", inStock: true, quantity: 22 },
+          { size: "XL", inStock: true, quantity: 15 },
+          { size: "XXL", inStock: false, quantity: 0 },
+        ],
+      },
+      {
+        id: "baggy-adicolor-black",
+        colorway: "Noir",
+        price: 74.99,
+        salePrice: 54.99,
+        thumbnailUrl:
+          "/clothing/thumbnails/Pantalon_de_survetement_coupe_baggy_Adicolor_Firebird_Noir_IZ4801_sm.webp",
+        largeUrl:
+          "/clothing/large/Pantalon_de_survetement_coupe_baggy_Adicolor_Firebird_Noir_IZ4801.webp",
+        alt: "Pantalon de survêtement",
+        sizes: [
+          { size: "XS", inStock: true, quantity: 7 },
+          { size: "S", inStock: false, quantity: 0 },
+          { size: "M", inStock: true, quantity: 11 },
+          { size: "L", inStock: true, quantity: 16 },
+          { size: "XL", inStock: false, quantity: 0 },
+          { size: "XXL", inStock: true, quantity: 2 },
+        ],
+      },
+    ],
+  },
+  {
+    productId: "short-own",
+    name: "Short Own The Run",
+    brand: "Adidas",
+    basePrice: 39.99,
+    category: "clothing",
+    gender: "Male",
+    variations: [
+      {
+        id: "short-own-blue",
+        colorway: "Bleu",
+        price: 39.99,
+        salePrice: null,
+        thumbnailUrl:
+          "/clothing/thumbnails/Short_Own_The_Run_Bleu_IY0706_sm.webp",
+        largeUrl: "/clothing/large/Short_Own_The_Run_Bleu_IY0706.webp",
+        alt: "Pantalon de survêtement",
+        sizes: [
+          { size: "XS", inStock: true, quantity: 2 },
+          { size: "S", inStock: true, quantity: 17 },
+          { size: "M", inStock: true, quantity: 20 },
+          { size: "L", inStock: true, quantity: 12 },
+          { size: "XL", inStock: false, quantity: 0 },
+          { size: "XXL", inStock: true, quantity: 8 },
+        ],
+      },
+      {
+        id: "short-own-gray",
+        colorway: "Gris",
+        price: 39.99,
+        salePrice: null,
+        thumbnailUrl:
+          "/clothing/thumbnails/Short_Own_The_Run_Gris_IY0705_sm.webp",
+        largeUrl: "/clothing/large/Short_Own_The_Run_Gris_IY0705.webp",
+        alt: "Pantalon de survêtement",
+        sizes: [
+          { size: "XS", inStock: true, quantity: 5 },
+          { size: "S", inStock: false, quantity: 0 },
+          { size: "M", inStock: true, quantity: 21 },
+          { size: "L", inStock: true, quantity: 22 },
+          { size: "XL", inStock: true, quantity: 15 },
+          { size: "XXL", inStock: false, quantity: 0 },
+        ],
+      },
+      {
+        id: "short-own-yellow",
+        colorway: "Jaune",
+        price: 39.99,
+        salePrice: null,
+        thumbnailUrl:
+          "/clothing/thumbnails/Short_Own_The_Run_Jaune_IZ4393_sm.webp",
+        largeUrl: "/clothing/large/Short_Own_The_Run_Jaune_IZ4393.webp",
+        alt: "Pantalon de survêtement",
+        sizes: [
+          { size: "XS", inStock: true, quantity: 7 },
+          { size: "S", inStock: false, quantity: 0 },
+          { size: "M", inStock: true, quantity: 11 },
+          { size: "L", inStock: true, quantity: 16 },
+          { size: "XL", inStock: false, quantity: 0 },
+          { size: "XXL", inStock: true, quantity: 2 },
+        ],
+      },
+      {
+        id: "short-own-pink",
+        colorway: "Rose",
+        price: 39.99,
+        salePrice: null,
+        thumbnailUrl:
+          "/clothing/thumbnails/Short_Own_The_Run_Rose_IZ4391_sm.webp",
+        largeUrl: "/clothing/large/Short_Own_The_Run_Rose_IZ4391.webp",
+        alt: "Pantalon de survêtement",
+        sizes: [
+          { size: "XS", inStock: true, quantity: 7 },
+          { size: "S", inStock: true, quantity: 9 },
+          { size: "M", inStock: true, quantity: 11 },
+          { size: "L", inStock: true, quantity: 16 },
+          { size: "XL", inStock: true, quantity: 4 },
+          { size: "XXL", inStock: true, quantity: 2 },
+        ],
+      },
+    ],
+  },
+  {
+    productId: "veste-own",
+    name: "Veste Own The Run",
+    brand: "Adidas",
+    basePrice: 74.99,
+    category: "clothing",
+    gender: "Male",
+    variations: [
+      {
+        id: "veste-own-blue",
+        colorway: "Bleu",
+        price: 74.99,
+        salePrice: 59.99,
+        thumbnailUrl:
+          "/clothing/thumbnails/Veste_Own_The_Run_Bleu_JX2249_sm.webp",
+        largeUrl: "/clothing/large/Veste_Own_The_Run_Bleu_JX2249.webp",
+        alt: "Pantalon de survêtement",
+        sizes: [
+          { size: "XS", inStock: true, quantity: 2 },
+          { size: "S", inStock: true, quantity: 17 },
+          { size: "M", inStock: true, quantity: 20 },
+          { size: "L", inStock: true, quantity: 12 },
+          { size: "XL", inStock: false, quantity: 0 },
+          { size: "XXL", inStock: true, quantity: 8 },
+        ],
+      },
+      {
+        id: "veste-own-black",
+        colorway: "Noir",
+        price: 74.99,
+        salePrice: 59.99,
+        thumbnailUrl:
+          "/clothing/thumbnails/Veste_Own_the_Run_Noir_IN1483_sm.webp",
+        largeUrl: "/clothing/large/Veste_Own_the_Run_Noir_IN1483.webp",
+        alt: "Pantalon de survêtement",
+        sizes: [
+          { size: "XS", inStock: true, quantity: 5 },
+          { size: "S", inStock: false, quantity: 0 },
+          { size: "M", inStock: true, quantity: 21 },
+          { size: "L", inStock: true, quantity: 22 },
+          { size: "XL", inStock: true, quantity: 15 },
+          { size: "XXL", inStock: false, quantity: 0 },
+        ],
+      },
+    ],
+  },
+];

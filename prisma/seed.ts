@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import { shoesProducts } from "./data/shoes";
-import { clothingProducts } from "./data/clothing";
+import { shoesProducts } from "./data/shoes/shoes";
+import { clothingProducts } from "./data/clothing/clothing";
 
 const prisma = new PrismaClient();
 
