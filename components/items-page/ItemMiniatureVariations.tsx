@@ -1,9 +1,13 @@
-import { SneakerType } from "@/model/SneakerType";
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
+import { ProductSize, ProductVariation } from "@prisma/client";
+
+export type VariationsType = ProductVariation & {
+  sizes: ProductSize[];
+};
 
 interface ItemVariationProps {
-  items: SneakerType[];
+  items: VariationsType[];
   currentImage: string;
   setCurrentImage: Dispatch<SetStateAction<string>>;
 }
@@ -18,14 +22,14 @@ export default function ItemMiniatureVariation({
       {items.map((item) => (
         <Image
           key={item.id}
-          src={item.thumbnail}
+          src={item.thumbnailUrl}
           alt="Variations"
           width={50}
           height={50}
           className={`rounded-md hover:border hover:border-amber-500 ${
-            currentImage === item.full ? "border border-amber-500" : ""
+            currentImage === item.largeUrl ? "border border-amber-500" : ""
           }`}
-          onMouseOver={() => setCurrentImage(item.full)}
+          onMouseOver={() => setCurrentImage(item.largeUrl)}
         />
       ))}
     </div>
