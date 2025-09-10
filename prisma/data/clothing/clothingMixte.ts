@@ -7,7 +7,7 @@ export const clothingMixte: SeedProduct[] = [
     brand: "Adidas",
     basePrice: 29.99,
     category: "clothing",
-    gender: "Male",
+    gender: "Mixte",
     variations: [
       {
         id: "t-shirt-paris-white",
@@ -34,7 +34,7 @@ export const clothingMixte: SeedProduct[] = [
     brand: "Adidas",
     basePrice: 29.99,
     category: "clothing",
-    gender: "Male",
+    gender: "Mixte",
     variations: [
       {
         id: "t-shirt-tour-black",
