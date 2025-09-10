@@ -1,17 +1,31 @@
-import ItemCard from "@/components/items-page/ItemCard";
+import {
+  PrismaClient,
+  Product,
+  ProductVariation,
+  ProductSize,
+} from "@prisma/client";
+import ProductList from "../components/ProductList";
 
-export default function Chaussure() {
-  return (
-    <div className="py-8 grid grid-cols-4">
-      <ItemCard />
-      <ItemCard />
-      <ItemCard />
-      <ItemCard />
+const prisma = new PrismaClient();
 
-      <ItemCard />
-      <ItemCard />
-      <ItemCard />
-      <ItemCard />
-    </div>
-  );
+export type ProductWithVariations = Product & {
+  variations: (ProductVariation & {
+    sizes: ProductSize[];
+  })[];
+};
+
+export default async function ChaussurePage() {
+  const initialShoes: ProductWithVariations[] = await prisma.product.findMany({
+    where: { category: "Shoes" },
+    include: {
+      variations: {
+        include: {
+          sizes: true,
+        },
+      },
+    },
+  });
+  console.log(initialShoes.length);
+
+  return <ProductList initialProduct={initialShoes} />;
 }

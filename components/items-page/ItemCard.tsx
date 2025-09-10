@@ -2,40 +2,31 @@
 
 import Image from "next/image";
 import ItemMiniatureVariation from "./ItemMiniatureVariations";
-import { SneakerType } from "@/model/SneakerType";
 import { useEffect, useState } from "react";
+import { Product, ProductSize, ProductVariation } from "@prisma/client";
 
-export default function ItemCard() {
-  const nike: SneakerType[] = [
-    {
-      id: 1,
-      thumbnail: "/sneakers/nike_red_yellow_thumb.jpg",
-      full: "/sneakers/nike_red_yellow.jpg",
-      alt: "Nike Air Max",
-    },
-    {
-      id: 2,
-      thumbnail: "/sneakers/sample1_thumb.jpg",
-      full: "/sneakers/sample1.jpg",
-      alt: "Nike Air Max",
-    },
-    {
-      id: 3,
-      thumbnail: "/sneakers/sample2_thumb.jpg",
-      full: "/sneakers/sample2.jpg",
-      alt: "Nike Air Max",
-    },
-  ];
+export type ProductWithVariations = Product & {
+  variations: (ProductVariation & {
+    sizes: ProductSize[];
+  })[];
+};
 
-  const [currentImage, setCurrentImage] = useState<string>(nike[0].full);
+interface ItemCardProps {
+  product: ProductWithVariations;
+}
 
-  useEffect(() => {}, [currentImage]);
+export default function ItemCard({ product }: ItemCardProps) {
+  const [currentImage, setCurrentImage] = useState<string>(
+    product.variations[0].largeUrl
+  );
+
+  useEffect(() => {
+    console.log(product);
+  }, [currentImage]);
 
   return (
-    <div
-      className="group w-fit pb-8 cursor-pointer relative"
-      onMouseLeave={() => setCurrentImage(nike[0].full)}
-    >
+    <div className="group w-fit pb-8 cursor-pointer relative">
+      {/* onMouseLeave={() => setCurrentImage(nike[0].full)} */}
       <div className="border border-gray-300 group-hover:rounded-lg overflow-hidden transition-all">
         <Image
           src={currentImage}
@@ -50,14 +41,14 @@ export default function ItemCard() {
           Chaussure Homme
         </p>
         <div className="hidden group-hover:block">
-          <ItemMiniatureVariation
+          {/* <ItemMiniatureVariation
             items={nike}
             currentImage={currentImage}
             setCurrentImage={setCurrentImage}
-          />
+          /> */}
         </div>
         <div className="flex justify-between font-semibold">
-          <p>Adidas NMD R1</p>
+          <p>{product.name}</p>
           <p>129,99$</p>
         </div>
       </div>
