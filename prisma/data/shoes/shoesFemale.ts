@@ -41,7 +41,7 @@ export const shoesFemale: SeedProduct[] = [
     gender: "Female",
     variations: [
       {
-        id: "air-force-lx-white",
+        id: "air-force-07-white",
         colorway: "Blanc",
         price: 129.99,
         salePrice: null,
