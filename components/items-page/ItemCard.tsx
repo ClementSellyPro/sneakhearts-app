@@ -17,9 +17,7 @@ interface ItemCardProps {
 }
 
 export default function ItemCard({ product, category }: ItemCardProps) {
-  const [currentImage, setCurrentImage] = useState<string>(
-    product.variations[0].largeUrl
-  );
+  const [currentImage, setCurrentImage] = useState<number>(0);
 
   let gender: string = product.gender;
   if (gender === "Male") {
@@ -33,11 +31,11 @@ export default function ItemCard({ product, category }: ItemCardProps) {
   return (
     <div
       className="group w-fit pb-8 cursor-pointer relative"
-      onMouseLeave={() => setCurrentImage(product.variations[0].largeUrl)}
+      onMouseLeave={() => setCurrentImage(0)}
     >
       <div className="border border-gray-300 group-hover:rounded-lg overflow-hidden transition-all">
         <Image
-          src={currentImage}
+          src={product.variations[currentImage].largeUrl}
           alt="Sneakers Photo"
           width={340}
           height={340}
@@ -51,7 +49,7 @@ export default function ItemCard({ product, category }: ItemCardProps) {
         <div className="hidden group-hover:block">
           <ItemMiniatureVariation
             items={product.variations}
-            currentImage={currentImage}
+            currentImage={product.variations[currentImage].largeUrl}
             setCurrentImage={setCurrentImage}
           />
         </div>
@@ -60,7 +58,12 @@ export default function ItemCard({ product, category }: ItemCardProps) {
             {product.name.slice(0, 30)}
             {product.name.length > 30 ? "..." : null}
           </p>
-          <p>129,99$</p>
+          <p>
+            {product.variations[currentImage].salePrice
+              ? product.variations[currentImage].salePrice
+              : product.variations[currentImage].price}
+            $
+          </p>
         </div>
       </div>
     </div>

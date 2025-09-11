@@ -9,7 +9,7 @@ export type VariationsType = ProductVariation & {
 interface ItemVariationProps {
   items: VariationsType[];
   currentImage: string;
-  setCurrentImage: Dispatch<SetStateAction<string>>;
+  setCurrentImage: Dispatch<SetStateAction<number>>;
 }
 
 export default function ItemMiniatureVariation({
@@ -29,7 +29,7 @@ export default function ItemMiniatureVariation({
           className={`rounded-md hover:border hover:border-amber-500 ${
             currentImage === item.largeUrl ? "border border-amber-500" : ""
           }`}
-          onMouseOver={() => setCurrentImage(item.largeUrl)}
+          onMouseOver={() => setCurrentImage(items.indexOf(item))}
         />
       ))}
     </div>
