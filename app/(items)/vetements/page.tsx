@@ -1,0 +1,31 @@
+import {
+  PrismaClient,
+  Product,
+  ProductVariation,
+  ProductSize,
+} from "@prisma/client";
+import ProductList from "../components/ProductList";
+
+const prisma = new PrismaClient();
+
+export type ProductWithVariations = Product & {
+  variations: (ProductVariation & {
+    sizes: ProductSize[];
+  })[];
+};
+
+export default async function VetementsPage() {
+  const initialClothing: ProductWithVariations[] =
+    await prisma.product.findMany({
+      where: { category: "clothing" },
+      include: {
+        variations: {
+          include: {
+            sizes: true,
+          },
+        },
+      },
+    });
+
+  return <ProductList initialProduct={initialClothing} category="Vêtement" />;
+}

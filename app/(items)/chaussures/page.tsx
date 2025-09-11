@@ -14,7 +14,7 @@ export type ProductWithVariations = Product & {
   })[];
 };
 
-export default async function ChaussurePage() {
+export default async function ChaussuresPage() {
   const initialShoes: ProductWithVariations[] = await prisma.product.findMany({
     where: { category: "Shoes" },
     include: {
@@ -25,7 +25,6 @@ export default async function ChaussurePage() {
       },
     },
   });
-  console.log(initialShoes.length);
 
-  return <ProductList initialProduct={initialShoes} />;
+  return <ProductList initialProduct={initialShoes} category="Chaussure" />;
 }

@@ -13,12 +13,22 @@ export type ProductWithVariations = Product & {
 
 interface ItemCardProps {
   product: ProductWithVariations;
+  category: string;
 }
 
-export default function ItemCard({ product }: ItemCardProps) {
+export default function ItemCard({ product, category }: ItemCardProps) {
   const [currentImage, setCurrentImage] = useState<string>(
     product.variations[0].largeUrl
   );
+
+  let gender: string = product.gender;
+  if (gender === "Male") {
+    gender = "Homme";
+  } else if (gender === "Female") {
+    gender = "Femme";
+  } else {
+    gender = "Mixte";
+  }
 
   return (
     <div
@@ -36,7 +46,7 @@ export default function ItemCard({ product }: ItemCardProps) {
       </div>
       <div className="flex flex-col gap-2 pt-4 group-hover:pt-1 group-hover:absolute bottom-2 group-hover:z-20 bg-white w-full">
         <p className="text-sm text-gray-400 group-hover:hidden">
-          Chaussure Homme
+          {category} {gender}
         </p>
         <div className="hidden group-hover:block">
           <ItemMiniatureVariation
@@ -46,7 +56,10 @@ export default function ItemCard({ product }: ItemCardProps) {
           />
         </div>
         <div className="flex justify-between font-semibold">
-          <p>{product.name}</p>
+          <p>
+            {product.name.slice(0, 30)}
+            {product.name.length > 30 ? "..." : null}
+          </p>
           <p>129,99$</p>
         </div>
       </div>

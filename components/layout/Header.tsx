@@ -18,13 +18,15 @@ export default function Header() {
       <nav>
         <ul className="flex gap-12 text-xl font-medium">
           <li className="nav-item relative">
-            Nouveauté
+            Promotion
             <div className="w-2 h-2 rounded-full bg-red-600 absolute -right-4 top-3"></div>
           </li>
-          <Link href={"/chaussure"}>
+          <Link href={"/chaussures"}>
             <li className="nav-item">Chaussures</li>
           </Link>
-          <li className="nav-item">Vêtements</li>
+          <Link href={"/vetements"}>
+            <li className="nav-item">Vêtements</li>
+          </Link>
         </ul>
       </nav>
       <div className="flex items-center gap-4">
