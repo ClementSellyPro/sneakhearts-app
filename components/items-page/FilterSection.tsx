@@ -3,7 +3,10 @@ import { useState } from "react";
 
 interface filterSectionProps {
   title: string;
-  items: string[];
+  items: {
+    filterName: string;
+    isSelected: boolean;
+  }[];
 }
 
 export default function FilterSection({ title, items }: filterSectionProps) {
@@ -28,17 +31,22 @@ export default function FilterSection({ title, items }: filterSectionProps) {
         />
       </div>
       {isSectionOpen && (
-        <div>
-          {items.map((item, index) => {
-            return (
-              <p
-                key={index}
-                className="px-6 py-4 border-b border-b-gray-300 cursor-pointer hover:bg-gray-100"
-              >
-                {item}
-              </p>
-            );
-          })}
+        <div className="flex justify-between w-full">
+          <div className="flex flex-col w-full">
+            {items.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className={`flex gap-4 px-6 py-4 border-b border-b-gray-300 hover:bg-gray-100 cursor-pointer ${
+                    item.isSelected ? "border-l-8" : null
+                  }`}
+                >
+                  <p>-</p>
+                  <p>{item.filterName}</p>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
     </>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import FilterSection from "./FilterSection";
+import Button from "../ui/Button";
 
 interface filterProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -14,7 +15,7 @@ export default function Filter({ setIsOpen }: filterProps) {
   return (
     <div onClick={toggleOpenFilter} className="fixed inset-0 bg-black/25 z-20">
       <div
-        className="fixed top-0 right-0 w-2/6"
+        className="fixed top-0 right-0 w-3/12"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative top-0 h-screen bg-white">
@@ -32,10 +33,31 @@ export default function Filter({ setIsOpen }: filterProps) {
 
           <FilterSection
             title="Trier par"
-            items={["Prix (croissant)", "Prix (décroissant)", "Nouveauté"]}
+            items={[
+              { filterName: "Prix (croissant)", isSelected: true },
+              { filterName: "Prix (décroissant)", isSelected: false },
+              { filterName: "Promotion", isSelected: false },
+            ]}
           />
-          <FilterSection title="Sexe" items={["Femme", "Homme"]} />
-          <FilterSection title="Catégorie" items={["Chaussure", "Vêtement"]} />
+          <FilterSection
+            title="Sexe"
+            items={[
+              { filterName: "Homme", isSelected: true },
+              { filterName: "Femme", isSelected: false },
+            ]}
+          />
+          <FilterSection
+            title="Catégorie"
+            items={[
+              { filterName: "Chaussure", isSelected: true },
+              { filterName: "Vêtement", isSelected: false },
+            ]}
+          />
+          <div className="flex justify-center pt-8">
+            <Button className="w-full" type="button">
+              Appliquer
+            </Button>
+          </div>
         </div>
       </div>
     </div>
