@@ -1,11 +1,5 @@
 import ItemCard from "@/components/items-page/ItemCard";
-import { Product, ProductSize, ProductVariation } from "@prisma/client";
-
-export type ProductWithVariations = Product & {
-  variations: (ProductVariation & {
-    sizes: ProductSize[];
-  })[];
-};
+import { ProductWithVariations } from "@/model/ProductType";
 
 interface ProductListProps {
   initialProduct: ProductWithVariations[];

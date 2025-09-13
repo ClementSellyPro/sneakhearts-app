@@ -3,13 +3,7 @@
 import Image from "next/image";
 import ItemMiniatureVariation from "./ItemMiniatureVariations";
 import { useState } from "react";
-import { Product, ProductSize, ProductVariation } from "@prisma/client";
-
-export type ProductWithVariations = Product & {
-  variations: (ProductVariation & {
-    sizes: ProductSize[];
-  })[];
-};
+import { ProductWithVariations } from "@/model/ProductType";
 
 interface ItemCardProps {
   product: ProductWithVariations;

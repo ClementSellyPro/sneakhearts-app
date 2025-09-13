@@ -1,18 +1,8 @@
-import {
-  PrismaClient,
-  Product,
-  ProductVariation,
-  ProductSize,
-} from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import ProductList from "../components/ProductList";
+import { ProductWithVariations } from "@/model/ProductType";
 
 const prisma = new PrismaClient();
-
-export type ProductWithVariations = Product & {
-  variations: (ProductVariation & {
-    sizes: ProductSize[];
-  })[];
-};
 
 export default async function VetementsPage() {
   const initialClothing: ProductWithVariations[] =
