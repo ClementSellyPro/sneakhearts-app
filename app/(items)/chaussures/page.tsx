@@ -16,5 +16,5 @@ export default async function ChaussuresPage() {
     },
   });
 
-  return <ProductList initialProduct={initialShoes} category="Chaussure" />;
+  return <ProductList initialProduct={initialShoes} category="Shoes" />;
 }

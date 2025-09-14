@@ -257,8 +257,8 @@ export const shoesMixte: SeedProduct[] = [
         price: 99.99,
         salePrice: null,
         thumbnailUrl:
-          "/sneakers/thumbnails/Chaussure_SL_72_OG_Jaune_JQ8316_sm.webp",
-        largeUrl: "/sneakers/large/Chaussure_SL_72_OG_Jaune_JQ8316.webp",
+          "/sneakers/thumbnails/Chaussure_SL_72_OG_Jaune_JQ8316_sm.jpg",
+        largeUrl: "/sneakers/large/Chaussure_SL_72_OG_Jaune_JQ8316.jpg",
         alt: "Adidas SL 72 Jaune",
         sizes: [
           { size: "38", inStock: true, quantity: 2 },

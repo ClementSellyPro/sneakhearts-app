@@ -401,8 +401,8 @@ export const shoesFemale: SeedProduct[] = [
         price: 149.99,
         salePrice: null,
         thumbnailUrl:
-          "/sneakers/thumbnails/Superstar_Vintage_Marron_JQ3258_sm.webp",
-        largeUrl: "/sneakers/large/Superstar_Vintage_Marron_JQ3258.webp",
+          "/sneakers/thumbnails/Superstar_Vintage_Marron_JQ3258_sm.jpg",
+        largeUrl: "/sneakers/large/Superstar_Vintage_Marron_JQ3258.jpg",
         alt: "Adidas Superstar Vintage",
         sizes: [
           { size: "38", inStock: false, quantity: 0 },

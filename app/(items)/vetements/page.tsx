@@ -17,5 +17,5 @@ export default async function VetementsPage() {
       },
     });
 
-  return <ProductList initialProduct={initialClothing} category="Vêtement" />;
+  return <ProductList initialProduct={initialClothing} category="Clothing" />;
 }

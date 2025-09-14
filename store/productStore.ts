@@ -2,17 +2,32 @@ import { ProductWithVariations } from "@/model/ProductType";
 import { create } from "zustand";
 
 interface ProductState {
-  products: ProductWithVariations[];
+  shoes: ProductWithVariations[];
+  clothing: ProductWithVariations[];
+  currentCategory: "Shoes" | "Clothing" | null;
   isLoading: boolean;
 
-  setProducts: (producs: ProductWithVariations[]) => void;
+  setShoes: (producs: ProductWithVariations[]) => void;
+  setClothing: (producs: ProductWithVariations[]) => void;
+  setCurrentCategory: (category: "Shoes" | "Clothing") => void;
   setLoading: (loading: boolean) => void;
+
+  getCurrentProducts: () => ProductWithVariations[];
 }
 
-export const useProductStore = create<ProductState>((set) => ({
-  products: [],
+export const useProductStore = create<ProductState>((set, get) => ({
+  shoes: [],
+  clothing: [],
+  currentCategory: null,
   isLoading: false,
 
-  setProducts: (products) => set({ products }),
+  setShoes: (products) => set({ shoes: products }),
+  setClothing: (products) => set({ clothing: products }),
+  setCurrentCategory: (category) => set({ currentCategory: category }),
   setLoading: (loading) => set({ isLoading: loading }),
+
+  getCurrentProducts: () => {
+    const { shoes, clothing, currentCategory } = get();
+    return currentCategory === "Shoes" ? shoes : clothing;
+  },
 }));

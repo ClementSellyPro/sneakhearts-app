@@ -232,9 +232,9 @@ export const clothingFemale: SeedProduct[] = [
         price: 79.99,
         salePrice: null,
         thumbnailUrl:
-          "/clothing/thumbnails/Veste_de_survetement_Adicolor_Classics_Firebird_Bleu_JC8263_sm.jpg",
+          "/clothing/thumbnails/Veste_de_survetement_Adicolor_Classics_Firebird_Bleu_JC8263_sm.webp",
         largeUrl:
-          "/clothing/large/Veste_de_survetement_Adicolor_Classics_Firebird_Bleu_JC8263.jpg",
+          "/clothing/large/Veste_de_survetement_Adicolor_Classics_Firebird_Bleu_JC8263.webp",
         alt: "Veste Classics Firebird Bleu",
         sizes: [
           { size: "XS", inStock: true, quantity: 12 },

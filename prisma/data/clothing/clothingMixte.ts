@@ -14,7 +14,8 @@ export const clothingMixte: SeedProduct[] = [
         colorway: "Blanc",
         price: 29.99,
         salePrice: 24.99,
-        thumbnailUrl: "/clothing/thumbnails/T-shirt_Paris_Blanc_IZ0405_sm.webp",
+        thumbnailUrl:
+          "/clothing/thumbnails/T-shirt_Paris_Blanc_IZ0405_01_sm.webp",
         largeUrl: "/clothing/large/T-shirt_Paris_Blanc_IZ0405.webp",
         alt: "Adidas T-Shirt Paris Blanc",
         sizes: [
