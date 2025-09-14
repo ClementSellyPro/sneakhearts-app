@@ -3,9 +3,11 @@
 import { useState } from "react";
 import Filter from "@/components/items-page/Filter";
 import Image from "next/image";
+import { useProducts } from "@/hooks/UseProducts";
 
 export default function HeaderItemsPage() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const { currentCategory, products } = useProducts();
 
   function onToggleFilter() {
     setIsFilterOpen((prev) => !prev);
@@ -13,7 +15,10 @@ export default function HeaderItemsPage() {
   return (
     <div className="flex justify-between items-end py-4 border-b border-[#e7e7e7]">
       <h1>
-        <span className="text-2xl font-semibold">CHAUSSURE</span> (12)
+        <span className="text-2xl font-semibold">
+          {currentCategory === "Shoes" ? "CHAUSSURE" : "VETEMENT"}
+        </span>{" "}
+        ({products.length})
       </h1>
       <button
         onClick={onToggleFilter}

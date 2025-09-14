@@ -38,7 +38,7 @@ export default function ItemCard({ product, category }: ItemCardProps) {
       </div>
       <div className="flex flex-col gap-2 pt-4 group-hover:pt-1 group-hover:absolute bottom-2 group-hover:z-20 bg-white w-full">
         <p className="text-sm text-gray-400 group-hover:hidden">
-          {category} {gender}
+          {category === "Shoes" ? "Chaussure" : "Vêtement"} {gender}
         </p>
         <div className="hidden group-hover:block">
           <ItemMiniatureVariation
