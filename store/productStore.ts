@@ -32,7 +32,8 @@ export const useProductStore = create<ProductState>((set, get) => ({
     return currentCategory === "Shoes" ? shoes : clothing;
   },
   getProductById(id: string) {
-    const products = [...this.shoes, ...this.clothing];
+    const state = get();
+    const products = [...state.shoes, ...state.clothing];
     return products.find((product) => product.id === id);
   },
 }));

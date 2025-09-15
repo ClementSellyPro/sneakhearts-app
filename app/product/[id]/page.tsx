@@ -1,14 +1,34 @@
-import Button from "@/components/ui/Button";
+"use client";
 
-export default function productPage() {
+import Button from "@/components/ui/Button";
+import { useProducts } from "@/hooks/UseProducts";
+import { ProductWithVariations } from "@/model/ProductType";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
+export default function ProductPage() {
+  const param = useParams();
+  const { getProductById } = useProducts();
+  const [productData, setProductData] = useState<ProductWithVariations>();
+
+  useEffect(() => {
+    const currentProductData: ProductWithVariations | undefined =
+      getProductById(param.id!.toString());
+    setProductData(currentProductData);
+  }, [setProductData, getProductById, param.id]);
+
+  if (!productData) return <p>Chargement...</p>;
+
   return (
     <div className="flex items-start justify-center gap-20 pt-20 pb-32">
       <div className="border h-[500px] w-[500px] rounded-xl">Big image</div>
 
       <div className="flex flex-col gap-6">
         <div>
-          <h1 className="font-semibold text-2xl">Adidas NMD R1</h1>
-          <p className="text-gray-500">Chaussure</p>
+          <h1 className="font-semibold text-2xl">{productData!.name}</h1>
+          <p className="text-gray-500">
+            {productData.category === "Shoes" ? "Chaussure" : "Vêtement"}
+          </p>
           <p>129.99$</p>
         </div>
         <div className="flex gap-4">

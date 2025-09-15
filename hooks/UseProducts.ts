@@ -40,11 +40,13 @@ export const useGetProducts = (
 };
 
 export const useProducts = () => {
-  const { getCurrentProducts, currentCategory, isLoading } = useProductStore();
+  const { getCurrentProducts, currentCategory, getProductById, isLoading } =
+    useProductStore();
 
   return {
     products: getCurrentProducts(),
     currentCategory,
+    getProductById,
     isLoading,
   };
 };

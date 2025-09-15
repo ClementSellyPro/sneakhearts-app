@@ -18,7 +18,7 @@ export default function ProductList({
 
   const { products, isLoading } = useProducts();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div>Chargement...</div>;
 
   return (
     <div className="py-8 grid grid-cols-4">
