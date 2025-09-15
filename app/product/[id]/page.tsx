@@ -5,11 +5,15 @@ import { useProducts } from "@/hooks/UseProducts";
 import { ProductWithVariations } from "@/model/ProductType";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function ProductPage() {
   const param = useParams();
   const { getProductById } = useProducts();
   const [productData, setProductData] = useState<ProductWithVariations>();
+  const [currentVariation, setCurrentVariation] = useState<number>(0);
+
+  const productVariation = productData?.variations[currentVariation];
 
   useEffect(() => {
     const currentProductData: ProductWithVariations | undefined =
@@ -21,15 +25,29 @@ export default function ProductPage() {
 
   return (
     <div className="flex items-start justify-center gap-20 pt-20 pb-32">
-      <div className="border h-[500px] w-[500px] rounded-xl">Big image</div>
+      <div className="h-[500px] w-[500px] rounded-xl overflow-hidden">
+        <Image
+          className="rounded-xl hover:scale-110 transition-all duration-300"
+          src={productVariation!.largeUrl}
+          alt={productVariation!.alt}
+          width={500}
+          height={500}
+        />
+      </div>
 
       <div className="flex flex-col gap-6">
         <div>
-          <h1 className="font-semibold text-2xl">{productData!.name}</h1>
-          <p className="text-gray-500">
+          <p className="text-gray-500 text-sm">
             {productData.category === "Shoes" ? "Chaussure" : "Vêtement"}
           </p>
-          <p>129.99$</p>
+          <h1 className="font-semibold text-2xl">{productData!.name}</h1>
+          <p
+            className={`text-lg ${
+              productVariation?.salePrice ? "text-red-500" : ""
+            }`}
+          >
+            {productVariation?.salePrice ?? productVariation?.price}$
+          </p>
         </div>
         <div className="flex gap-4">
           <div className="w-14 h-14 bg-gray-300 rounded-md"></div>
@@ -41,36 +59,16 @@ export default function ProductPage() {
         <div className="flex flex-col gap-4">
           <h2>Sélectionner la taille</h2>
           <div className="grid grid-cols-4 gap-4">
-            <div className="border border-gray-300 rounded-md w-fit py-1.5 px-8 cursor-pointer hover:bg-gray-100">
-              38
-            </div>
-            <div className="border border-gray-300 rounded-md w-fit py-1.5 px-8 cursor-pointer hover:bg-gray-100">
-              38
-            </div>
-            <div className="border border-gray-300 rounded-md w-fit py-1.5 px-8 cursor-pointer hover:bg-gray-100">
-              38
-            </div>
-            <div className="border border-gray-300 rounded-md w-fit py-1.5 px-8 cursor-pointer hover:bg-gray-100">
-              38
-            </div>
-            <div className="border border-gray-300 rounded-md w-fit py-1.5 px-8 cursor-pointer hover:bg-gray-100">
-              38
-            </div>
-            <div className="border border-gray-300 rounded-md w-fit py-1.5 px-8 cursor-pointer hover:bg-gray-100">
-              38
-            </div>
-            <div className="border border-gray-300 rounded-md w-fit py-1.5 px-8 cursor-pointer hover:bg-gray-100">
-              38
-            </div>
-            <div className="border border-gray-300 rounded-md w-fit py-1.5 px-8 cursor-pointer hover:bg-gray-100">
-              38
-            </div>
-            <div className="border border-gray-300 rounded-md w-fit py-1.5 px-8 cursor-pointer hover:bg-gray-100">
-              38
-            </div>
-            <div className="border border-gray-300 rounded-md w-fit py-1.5 px-8 cursor-pointer hover:bg-gray-100">
-              38
-            </div>
+            {productVariation?.sizes.map((size) => (
+              <div
+                key={size.id}
+                className={`border border-gray-300 rounded-md w-fit py-1.5 px-8 cursor-pointer hover:bg-black hover:text-white ${
+                  !size.inStock && "line-through bg-gray-100 opacity-60"
+                }`}
+              >
+                {size.size}
+              </div>
+            ))}
           </div>
         </div>
 
