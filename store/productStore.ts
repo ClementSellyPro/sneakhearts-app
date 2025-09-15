@@ -13,6 +13,7 @@ interface ProductState {
   setLoading: (loading: boolean) => void;
 
   getCurrentProducts: () => ProductWithVariations[];
+  getProductById: (id: string) => ProductWithVariations | undefined;
 }
 
 export const useProductStore = create<ProductState>((set, get) => ({
@@ -29,5 +30,9 @@ export const useProductStore = create<ProductState>((set, get) => ({
   getCurrentProducts: () => {
     const { shoes, clothing, currentCategory } = get();
     return currentCategory === "Shoes" ? shoes : clothing;
+  },
+  getProductById(id: string) {
+    const products = [...this.shoes, ...this.clothing];
+    return products.find((product) => product.id === id);
   },
 }));

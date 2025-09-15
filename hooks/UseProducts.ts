@@ -8,8 +8,14 @@ export const useGetProducts = (
   initialProducts: ProductWithVariations[],
   category: "Shoes" | "Clothing"
 ) => {
-  const { setShoes, setClothing, setCurrentCategory, shoes, clothing } =
-    useProductStore();
+  const {
+    setShoes,
+    setClothing,
+    setCurrentCategory,
+    shoes,
+    clothing,
+    getProductById,
+  } = useProductStore();
 
   useEffect(() => {
     setCurrentCategory(category);
@@ -27,6 +33,7 @@ export const useGetProducts = (
     setShoes,
     setClothing,
     setCurrentCategory,
+    getProductById,
     shoes.length,
     clothing.length,
   ]);
