@@ -62,16 +62,12 @@ export default function ItemCard({ product, category }: ItemCardProps) {
           <p
             className={`${currentVariation.salePrice ? "text-red-500" : null}`}
           >
-            {currentVariation.salePrice ? (
+            {currentVariation.salePrice && (
               <span className="text-black font-light line-through">
-                {" "}
                 {currentVariation.price}{" "}
               </span>
-            ) : null}
-            {currentVariation.salePrice
-              ? currentVariation.salePrice
-              : currentVariation.price}
-            $
+            )}
+            {currentVariation.salePrice || currentVariation.price}$
           </p>
         </div>
       </div>
