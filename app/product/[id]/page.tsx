@@ -12,9 +12,13 @@ export default function ProductPage() {
   const param = useParams();
   const { getProductById } = useProducts();
   const [productData, setProductData] = useState<ProductWithVariations>();
-  const [currentVariation, setCurrentVariation] = useState<number>(0);
+  const [currentVariation, setCurrentVariation] = useState<string>(
+    param.id!.toString()
+  );
 
-  const productVariation = productData?.variations[currentVariation];
+  const productVariation = productData?.variations.find(
+    (variation) => variation.id === currentVariation
+  );
 
   useEffect(() => {
     const currentProductData: ProductWithVariations | undefined =
@@ -54,7 +58,7 @@ export default function ProductPage() {
           <h2>Coloris disponible</h2>
           <VariationList
             items={productData.variations}
-            currentImage={productData.variations[0].largeUrl}
+            currentImageId={currentVariation}
             setCurrentVariation={setCurrentVariation}
           />
         </div>

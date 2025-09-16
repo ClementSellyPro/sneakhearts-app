@@ -23,7 +23,7 @@ export default function ProductList({
   return (
     <div className="py-8 grid grid-cols-4">
       {products.map((product) => (
-        <Link key={product.id} href={`/product/${product.id}`}>
+        <Link key={product.id} href={`/product/${product.variations[0].id}`}>
           <ItemCard product={product} category={category} />
         </Link>
       ))}

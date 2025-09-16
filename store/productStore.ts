@@ -34,6 +34,8 @@ export const useProductStore = create<ProductState>((set, get) => ({
   getProductById(id: string) {
     const state = get();
     const products = [...state.shoes, ...state.clothing];
-    return products.find((product) => product.id === id);
+    return products.find((product) =>
+      product.variations.find((variation) => variation.id === id)
+    );
   },
 }));

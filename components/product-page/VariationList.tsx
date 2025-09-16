@@ -9,22 +9,22 @@ export type VariationsType = ProductVariation & {
 
 interface ItemVariationProps {
   items: VariationsType[];
-  currentImage: string;
-  setCurrentVariation: Dispatch<SetStateAction<number>>;
+  currentImageId: string;
+  setCurrentVariation: Dispatch<SetStateAction<string>>;
 }
 
 export default function VariationList({
   items,
-  currentImage,
+  currentImageId,
   setCurrentVariation,
 }: ItemVariationProps) {
   return (
     <div className="flex gap-2">
-      {items.map((item, index) => (
+      {items.map((item) => (
         <Link
           key={item.id}
           href={`/product/${item.id}`}
-          onClick={() => setCurrentVariation(index)}
+          onClick={() => setCurrentVariation(item.id)}
         >
           <Image
             src={item.thumbnailUrl}
@@ -32,7 +32,7 @@ export default function VariationList({
             width={50}
             height={50}
             className={`rounded-md hover:border hover:border-amber-500 ${
-              currentImage === item.largeUrl ? "border border-amber-500" : ""
+              currentImageId === item.id ? "border border-amber-500" : ""
             }`}
           />
         </Link>
