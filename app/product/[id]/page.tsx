@@ -6,6 +6,7 @@ import { ProductWithVariations } from "@/model/ProductType";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import VariationList from "@/components/product-page/VariationList";
 
 export default function ProductPage() {
   const param = useParams();
@@ -49,11 +50,13 @@ export default function ProductPage() {
             {productVariation?.salePrice ?? productVariation?.price}$
           </p>
         </div>
-        <div className="flex gap-4">
-          <div className="w-14 h-14 bg-gray-300 rounded-md"></div>
-          <div className="w-14 h-14 bg-gray-300 rounded-md"></div>
-          <div className="w-14 h-14 bg-gray-300 rounded-md"></div>
-          <div className="w-14 h-14 bg-gray-300 rounded-md"></div>
+        <div className="flex flex-col gap-2">
+          <h2>Coloris disponible</h2>
+          <VariationList
+            items={productData.variations}
+            currentImage={productData.variations[0].largeUrl}
+            setCurrentVariation={setCurrentVariation}
+          />
         </div>
 
         <div className="flex flex-col gap-4">
