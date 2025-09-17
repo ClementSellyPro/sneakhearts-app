@@ -3,7 +3,6 @@
 import ItemCard from "@/components/items-page/ItemCard";
 import { useGetProducts, useProducts } from "@/hooks/UseProducts";
 import { ProductWithVariations } from "@/model/ProductType";
-import Link from "next/link";
 
 interface ProductListProps {
   initialProduct: ProductWithVariations[];
@@ -23,9 +22,7 @@ export default function ProductList({
   return (
     <div className="py-8 grid grid-cols-4">
       {products.map((product) => (
-        <Link key={product.id} href={`/product/${product.variations[0].id}`}>
-          <ItemCard product={product} category={category} />
-        </Link>
+        <ItemCard key={product.id} product={product} category={category} />
       ))}
     </div>
   );
