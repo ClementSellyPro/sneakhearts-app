@@ -47,11 +47,17 @@ export default function ProductPage() {
           </p>
           <h1 className="font-semibold text-2xl">{productData!.name}</h1>
           <p
-            className={`text-lg ${
+            className={`font-semibold text-lg ${
               productVariation?.salePrice ? "text-red-500" : ""
             }`}
           >
             {productVariation?.salePrice ?? productVariation?.price}$
+            <span className="text-sm text-black line-through">
+              {" "}
+              {productVariation?.salePrice
+                ? productVariation?.price + "$"
+                : null}
+            </span>
           </p>
         </div>
         <div className="flex flex-col gap-2">
