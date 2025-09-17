@@ -15,6 +15,7 @@ export default function ProductPage() {
   const [currentVariation, setCurrentVariation] = useState<string>(
     param.id!.toString()
   );
+  const [selectedSize, setSelectedSize] = useState<string>("");
 
   const productVariation = productData?.variations.find(
     (variation) => variation.id === currentVariation
@@ -27,6 +28,11 @@ export default function ProductPage() {
   }, [setProductData, getProductById, param.id]);
 
   if (!productData) return <p>Chargement...</p>;
+
+  function onSelectSize(e: React.MouseEvent<HTMLDivElement>) {
+    const target = e.target as HTMLElement;
+    setSelectedSize(target.innerText);
+  }
 
   return (
     <div className="flex items-start justify-center gap-20 pt-20 pb-32">
@@ -75,8 +81,15 @@ export default function ProductPage() {
             {productVariation?.sizes.map((size) => (
               <div
                 key={size.id}
+                onClick={(e: React.MouseEvent<HTMLDivElement>) =>
+                  onSelectSize(e)
+                }
                 className={`border border-gray-300 rounded-md w-fit py-1.5 px-8 cursor-pointer hover:bg-black hover:text-white ${
                   !size.inStock && "line-through bg-gray-100 opacity-60"
+                }  ${
+                  selectedSize === size.size
+                    ? "bg-black text-white font-semibold"
+                    : ""
                 }`}
               >
                 {size.size}
