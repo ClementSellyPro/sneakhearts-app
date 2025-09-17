@@ -31,7 +31,7 @@ export default function ItemCard({ product, category }: ItemCardProps) {
         className="group w-fit pb-8 cursor-pointer relative"
         onMouseLeave={() => setCurrentImage(0)}
       >
-        <div className="relative border border-gray-300 group-hover:rounded-lg overflow-hidden transition-all">
+        <div className="relative border border-gray-300 group-hover:border-gray-500 group-hover:rounded-lg overflow-hidden transition-all">
           <Image
             src={currentVariation.largeUrl}
             alt="Sneakers Photo"
@@ -45,7 +45,7 @@ export default function ItemCard({ product, category }: ItemCardProps) {
             </div>
           ) : null}
         </div>
-        <div className="flex flex-col gap-2 pt-4 group-hover:pt-1 group-hover:absolute bottom-2 group-hover:z-20 bg-white w-full">
+        <div className="flex flex-col gap-2 pt-4 group-hover:pt-1 group-hover:absolute -bottom-14 group-hover:z-20 bg-white w-full">
           <p className="text-sm text-gray-400 group-hover:hidden">
             {category === "Shoes" ? "Chaussure" : "Vêtement"} {gender}
           </p>
