@@ -1,15 +1,31 @@
+"use client";
+
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import FilterSection from "./FilterSection";
-import Button from "../ui/Button";
+import { useProductStore } from "@/store/productStore";
 
 interface filterProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function Filter({ setIsOpen }: filterProps) {
+  const { filters, resetFilters, setGenderFilter, setSortBy, applyFilters } =
+    useProductStore();
+
   function toggleOpenFilter() {
     setIsOpen((prev) => !prev);
+  }
+
+  function toggleSortBy(filter: string) {
+    if (filter === "price-asc") {
+      setSortBy("price-asc");
+    } else if (filter === "price-desc") {
+      setSortBy("price-desc");
+    } else {
+      setSortBy("promotion");
+    }
+    applyFilters();
   }
 
   return (
@@ -34,30 +50,39 @@ export default function Filter({ setIsOpen }: filterProps) {
           <FilterSection
             title="Trier par"
             items={[
-              { filterName: "Prix (croissant)", isSelected: true },
-              { filterName: "Prix (décroissant)", isSelected: false },
-              { filterName: "Promotion", isSelected: false },
+              {
+                filterName: "Prix (croissant)",
+                isSelected: filters.sortBy.includes("price-asc"),
+              },
+              {
+                filterName: "Prix (décroissant)",
+                isSelected: filters.sortBy.includes("price-desc"),
+              },
+              {
+                filterName: "Promotion",
+                isSelected: filters.sortBy.includes("promotion"),
+              },
             ]}
+            toggleFilter={toggleSortBy}
           />
           <FilterSection
-            title="Sexe"
+            title="Genre"
             items={[
-              { filterName: "Homme", isSelected: true },
-              { filterName: "Femme", isSelected: false },
+              {
+                filterName: "Homme",
+                isSelected: filters.genders.includes("male"),
+              },
+              {
+                filterName: "Femme",
+                isSelected: filters.genders.includes("female"),
+              },
+              {
+                filterName: "Mixte",
+                isSelected: filters.genders.includes("mixte"),
+              },
             ]}
+            toggleFilter={toggleSortBy}
           />
-          <FilterSection
-            title="Catégorie"
-            items={[
-              { filterName: "Chaussure", isSelected: true },
-              { filterName: "Vêtement", isSelected: false },
-            ]}
-          />
-          <div className="flex justify-center pt-8">
-            <Button className="w-full" type="button">
-              Appliquer
-            </Button>
-          </div>
         </div>
       </div>
     </div>

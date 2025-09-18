@@ -7,10 +7,16 @@ interface filterSectionProps {
     filterName: string;
     isSelected: boolean;
   }[];
+  toggleFilter: (sortBy: string) => void;
 }
 
-export default function FilterSection({ title, items }: filterSectionProps) {
+export default function FilterSection({
+  title,
+  items,
+  toggleFilter,
+}: filterSectionProps) {
   const [isSectionOpen, setIsSectionOpen] = useState<boolean>(false);
+  const value: string[] = ["price-asc", "price-desc", "promotion"];
 
   function toggleSection() {
     setIsSectionOpen((prev) => !prev);
@@ -40,6 +46,7 @@ export default function FilterSection({ title, items }: filterSectionProps) {
                   className={`flex gap-4 px-6 py-4 border-b border-b-gray-300 hover:bg-gray-100 cursor-pointer ${
                     item.isSelected ? "border-l-8" : null
                   }`}
+                  onClick={() => toggleFilter(value[index])}
                 >
                   <p>-</p>
                   <p>{item.filterName}</p>
