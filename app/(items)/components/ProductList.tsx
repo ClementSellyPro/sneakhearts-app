@@ -16,14 +16,13 @@ export default function ProductList({
 }: ProductListProps) {
   useGetProducts(initialProduct, category);
 
-  const { products, getFilteredProducts, applyFilters, isLoading } =
-    useProducts();
+  const { getFilteredProducts, applyFilters, isLoading } = useProducts();
 
   const filteredProducts = getFilteredProducts();
 
   useEffect(() => {
     applyFilters();
-  }, [products.length, applyFilters]);
+  }, [category, applyFilters]);
 
   if (isLoading) return <div>Chargement...</div>;
 

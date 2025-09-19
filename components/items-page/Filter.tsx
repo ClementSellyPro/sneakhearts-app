@@ -28,16 +28,13 @@ export default function Filter({ setIsOpen }: filterProps) {
 
   function toggleGender(gender: string) {
     const currentGenders = [...filters.genders];
-    let genderValue = "";
 
-    if (gender === "Homme") genderValue = "male";
-    else if (gender === "Femme") genderValue = "female";
-    else if (gender === "Mixte") genderValue = "mixte";
-
-    if (currentGenders.includes(genderValue)) {
-      setGenderFilter(currentGenders.filter((g) => g !== genderValue));
+    if (currentGenders.includes(gender)) {
+      setGenderFilter(
+        currentGenders.filter((currentGender) => currentGender !== gender)
+      );
     } else {
-      setGenderFilter([...currentGenders, genderValue]);
+      setGenderFilter([...currentGenders, gender]);
     }
   }
 

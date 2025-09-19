@@ -15,6 +15,7 @@ export const useGetProducts = (
     shoes,
     clothing,
     getProductById,
+    applyFilters,
   } = useProductStore();
 
   useEffect(() => {
@@ -27,6 +28,10 @@ export const useGetProducts = (
     if (category === "Clothing" && clothing.length === 0) {
       setClothing(initialProducts);
     }
+
+    setTimeout(() => {
+      applyFilters();
+    }, 0);
   }, [
     initialProducts,
     category,
@@ -34,6 +39,7 @@ export const useGetProducts = (
     setClothing,
     setCurrentCategory,
     getProductById,
+    applyFilters,
     shoes.length,
     clothing.length,
   ]);

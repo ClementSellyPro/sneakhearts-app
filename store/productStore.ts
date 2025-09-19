@@ -98,7 +98,9 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     // Gender filter
     if (state.filters.genders.length > 0) {
       filtered = filtered.filter((product) =>
-        state.filters.genders.includes(product.gender)
+        state.filters.genders.some(
+          (gender) => gender.toLowerCase() === product.gender.toLowerCase()
+        )
       );
     }
 

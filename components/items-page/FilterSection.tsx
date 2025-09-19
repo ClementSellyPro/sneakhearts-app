@@ -34,7 +34,16 @@ export default function FilterSection({
           return displayName;
       }
     } else if (sectionTitle === "Genre") {
-      return displayName;
+      switch (displayName) {
+        case "Homme":
+          return "male";
+        case "Femme":
+          return "female";
+        case "Mixte":
+          return "mixte";
+        default:
+          return displayName;
+      }
     }
     return displayName;
   }
@@ -61,7 +70,7 @@ export default function FilterSection({
                 <div
                   key={index}
                   className={`flex gap-4 px-6 py-4 border-b border-b-gray-300 hover:bg-gray-100 cursor-pointer ${
-                    item.isSelected ? "border-l-8" : null
+                    item.isSelected ? "border-l-8 font-semibold" : null
                   }`}
                   onClick={() =>
                     toggleFilter(getFilterValue(item.filterName, title))
