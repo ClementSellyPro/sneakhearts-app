@@ -34,7 +34,7 @@ interface ProductActions {
 }
 
 const defaultFilters: ProductFilters = {
-  genders: ["male"],
+  genders: [],
   sortBy: "price-asc",
 };
 
@@ -50,7 +50,10 @@ export const useProductStore = create<ProductStore>((set, get) => ({
 
   setShoes: (products) => set({ shoes: products }),
   setClothing: (products) => set({ clothing: products }),
-  setCurrentCategory: (category) => set({ currentCategory: category }),
+  setCurrentCategory: (category) => {
+    set({ currentCategory: category });
+    get().applyFilters();
+  },
   setLoading: (loading) => set({ isLoading: loading }),
 
   getCurrentProducts: () => {
@@ -89,8 +92,8 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   },
   applyFilters: () => {
     const state = get();
-    const allProducts = [...state.shoes, ...state.clothing];
-    let filtered = [...allProducts];
+    const currentProducts = state.getCurrentProducts();
+    let filtered = [...currentProducts];
 
     // Gender filter
     if (state.filters.genders.length > 0) {
@@ -100,20 +103,38 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     }
 
     // Price sorting
-    filtered.sort((a, b) => {
-      const minPriceA = Math.min(
-        ...a.variations.map((v) => v.salePrice || v.price)
-      );
-      const minPriceB = Math.min(
-        ...b.variations.map((v) => v.salePrice || v.price)
-      );
+    if (
+      state.filters.sortBy === "price-asc" ||
+      state.filters.sortBy === "price-desc"
+    ) {
+      filtered.sort((a, b) => {
+        const minPriceA = Math.min(
+          ...a.variations.map((v) => v.salePrice || v.price)
+        );
+        const minPriceB = Math.min(
+          ...b.variations.map((v) => v.salePrice || v.price)
+        );
 
-      if (state.filters.sortBy === "price-asc") {
-        return minPriceA - minPriceB;
-      } else {
-        return minPriceB - minPriceA;
-      }
-    });
+        if (state.filters.sortBy === "price-asc") {
+          return minPriceA - minPriceB;
+        } else {
+          return minPriceB - minPriceA;
+        }
+      });
+    } else if (state.filters.sortBy === "promotion") {
+      filtered.sort((a, b) => {
+        const hasPromotionA = a.variations.some(
+          (v) => v.salePrice && v.salePrice < v.price
+        );
+        const hasPromotionB = b.variations.some(
+          (v) => v.salePrice && v.salePrice < v.price
+        );
+
+        if (hasPromotionA && !hasPromotionB) return -1;
+        if (!hasPromotionA && hasPromotionB) return 1;
+        return 0;
+      });
+    }
 
     set({ filteredProducts: filtered });
   },
@@ -126,45 +147,5 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     const state = get();
     const allProducts = [...state.shoes, ...state.clothing];
     return [...new Set(allProducts.map((p) => p.gender))];
-  },
-  fetchAllProducts: async () => {
-    const state = get();
-
-    if (state.shoes.length > 0 || state.clothing.length > 0) {
-      return;
-    }
-
-    set({ isLoading: true });
-
-    try {
-      // Fetch both categories in parallel
-      const [shoesResponse, clothingResponse] = await Promise.all([
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/shoes`),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/clothing`),
-      ]);
-
-      if (!shoesResponse.ok || !clothingResponse.ok) {
-        throw new Error("Failed to fetch products");
-      }
-
-      const [shoes, clothing] = await Promise.all([
-        shoesResponse.json(),
-        clothingResponse.json(),
-      ]);
-
-      set({
-        shoes,
-        clothing,
-        isLoading: false,
-      });
-
-      // Apply filters after fetching
-      get().applyFilters();
-      //eslint-disable-next-line
-    } catch (error) {
-      set({
-        isLoading: false,
-      });
-    }
   },
 }));
