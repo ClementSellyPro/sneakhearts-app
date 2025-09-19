@@ -16,10 +16,27 @@ export default function FilterSection({
   toggleFilter,
 }: filterSectionProps) {
   const [isSectionOpen, setIsSectionOpen] = useState<boolean>(false);
-  const value: string[] = ["price-asc", "price-desc", "promotion"];
 
   function toggleSection() {
     setIsSectionOpen((prev) => !prev);
+  }
+
+  function getFilterValue(displayName: string, sectionTitle: string): string {
+    if (sectionTitle === "Trier par") {
+      switch (displayName) {
+        case "Prix (croissant)":
+          return "price-asc";
+        case "Prix (décroissant)":
+          return "price-desc";
+        case "Promotion":
+          return "promotion";
+        default:
+          return displayName;
+      }
+    } else if (sectionTitle === "Genre") {
+      return displayName;
+    }
+    return displayName;
   }
 
   return (
@@ -46,7 +63,9 @@ export default function FilterSection({
                   className={`flex gap-4 px-6 py-4 border-b border-b-gray-300 hover:bg-gray-100 cursor-pointer ${
                     item.isSelected ? "border-l-8" : null
                   }`}
-                  onClick={() => toggleFilter(value[index])}
+                  onClick={() =>
+                    toggleFilter(getFilterValue(item.filterName, title))
+                  }
                 >
                   <p>-</p>
                   <p>{item.filterName}</p>

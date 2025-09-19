@@ -27,6 +27,7 @@ interface ProductActions {
   getCurrentProducts: () => ProductWithVariations[];
   getProductById: (id: string) => ProductWithVariations | undefined;
   getFilteredProducts: () => ProductWithVariations[];
+  getAvailableGenders: () => string[];
 
   resetFilters: () => void;
   applyFilters: () => void;
@@ -54,7 +55,14 @@ export const useProductStore = create<ProductStore>((set, get) => ({
 
   getCurrentProducts: () => {
     const { shoes, clothing, currentCategory } = get();
-    return currentCategory === "Shoes" ? shoes : clothing;
+    switch (currentCategory) {
+      case "Shoes":
+        return shoes;
+      case "Clothing":
+        return clothing;
+      default:
+        return [...shoes, ...clothing];
+    }
   },
   getProductById(id: string) {
     const state = get();
@@ -118,5 +126,45 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     const state = get();
     const allProducts = [...state.shoes, ...state.clothing];
     return [...new Set(allProducts.map((p) => p.gender))];
+  },
+  fetchAllProducts: async () => {
+    const state = get();
+
+    if (state.shoes.length > 0 || state.clothing.length > 0) {
+      return;
+    }
+
+    set({ isLoading: true });
+
+    try {
+      // Fetch both categories in parallel
+      const [shoesResponse, clothingResponse] = await Promise.all([
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/shoes`),
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/clothing`),
+      ]);
+
+      if (!shoesResponse.ok || !clothingResponse.ok) {
+        throw new Error("Failed to fetch products");
+      }
+
+      const [shoes, clothing] = await Promise.all([
+        shoesResponse.json(),
+        clothingResponse.json(),
+      ]);
+
+      set({
+        shoes,
+        clothing,
+        isLoading: false,
+      });
+
+      // Apply filters after fetching
+      get().applyFilters();
+      //eslint-disable-next-line
+    } catch (error) {
+      set({
+        isLoading: false,
+      });
+    }
   },
 }));

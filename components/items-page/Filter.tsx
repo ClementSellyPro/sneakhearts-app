@@ -10,8 +10,7 @@ interface filterProps {
 }
 
 export default function Filter({ setIsOpen }: filterProps) {
-  const { filters, resetFilters, setGenderFilter, setSortBy, applyFilters } =
-    useProductStore();
+  const { filters, setSortBy, setGenderFilter } = useProductStore();
 
   function toggleOpenFilter() {
     setIsOpen((prev) => !prev);
@@ -25,7 +24,21 @@ export default function Filter({ setIsOpen }: filterProps) {
     } else {
       setSortBy("promotion");
     }
-    applyFilters();
+  }
+
+  function toggleGender(gender: string) {
+    const currentGenders = [...filters.genders];
+    let genderValue = "";
+
+    if (gender === "Homme") genderValue = "male";
+    else if (gender === "Femme") genderValue = "female";
+    else if (gender === "Mixte") genderValue = "mixte";
+
+    if (currentGenders.includes(genderValue)) {
+      setGenderFilter(currentGenders.filter((g) => g !== genderValue));
+    } else {
+      setGenderFilter([...currentGenders, genderValue]);
+    }
   }
 
   return (
@@ -52,15 +65,15 @@ export default function Filter({ setIsOpen }: filterProps) {
             items={[
               {
                 filterName: "Prix (croissant)",
-                isSelected: filters.sortBy.includes("price-asc"),
+                isSelected: filters.sortBy === "price-asc",
               },
               {
                 filterName: "Prix (décroissant)",
-                isSelected: filters.sortBy.includes("price-desc"),
+                isSelected: filters.sortBy === "price-desc",
               },
               {
                 filterName: "Promotion",
-                isSelected: filters.sortBy.includes("promotion"),
+                isSelected: filters.sortBy === "promotion",
               },
             ]}
             toggleFilter={toggleSortBy}
@@ -81,7 +94,7 @@ export default function Filter({ setIsOpen }: filterProps) {
                 isSelected: filters.genders.includes("mixte"),
               },
             ]}
-            toggleFilter={toggleSortBy}
+            toggleFilter={toggleGender}
           />
         </div>
       </div>
