@@ -35,8 +35,9 @@ export default function Header() {
         <Link href={"/register"}>
           <User className="icon-item" />
         </Link>
-
-        <Heart className="icon-item" />
+        <Link href={"/favorites"}>
+          <Heart className="icon-item" />
+        </Link>
         <Link href={"/cart"}>
           <ShoppingCart className="icon-item" />
         </Link>
