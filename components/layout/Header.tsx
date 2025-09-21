@@ -1,8 +1,15 @@
 import Image from "next/image";
-import { User, Heart, ShoppingCart } from "lucide-react";
+import { User, Heart, ShoppingCart, LogOut } from "lucide-react";
 import Link from "next/link";
+import { authClient, useSession } from "@/lib/auth-client";
 
 export default function Header() {
+  const { data: session } = useSession();
+
+  function onLogout() {
+    authClient.signOut();
+  }
+
   return (
     <header className="flex items-center justify-between px-12 bg-white w-full border-b border-gray-200">
       <Link href={"/"}>
@@ -32,9 +39,14 @@ export default function Header() {
         </ul>
       </nav>
       <div className="flex items-center gap-4">
-        <Link href={"/register"}>
-          <User className="icon-item" />
-        </Link>
+        {session?.user ? (
+          <LogOut className="icon-item" onClick={onLogout} />
+        ) : (
+          <Link href={"/register"}>
+            <User className="icon-item" />
+          </Link>
+        )}
+
         <Link href={"/favorites"}>
           <Heart className="icon-item" />
         </Link>

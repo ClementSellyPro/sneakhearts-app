@@ -49,6 +49,7 @@ export default function LoginForm() {
       if (error) {
         setErrorMessage("Les identifiants renseignés sont incorrect.");
       }
+      //eslint-disable-next-line
     } catch (error) {
       setErrorMessage("Une erreur est survenue, veuillez réessayer.");
     } finally {
