@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useState } from "react";
 import Button from "../ui/Button";
 import { FormField } from "../ui/FormField";
@@ -15,10 +16,12 @@ export default function LoginForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setIsLoading(true);
+    setErrorMessage("");
 
     const validation = UserLog.safeParse({
       email,
@@ -42,7 +45,12 @@ export default function LoginForm() {
          */
         rememberMe: false,
       });
-    } catch {
+
+      if (error) {
+        setErrorMessage("Les identifiants renseignés sont incorrect.");
+      }
+    } catch (error) {
+      setErrorMessage("Une erreur est survenue, veuillez réessayer.");
     } finally {
       setIsLoading(false);
     }
@@ -66,6 +74,13 @@ export default function LoginForm() {
         onChange={(e) => setPassword(e.target.value)}
         required
       />
+
+      {errorMessage && (
+        <div className="text-red-500 text-sm text-center p-2 bg-red-50 border border-red-200 rounded">
+          <span>{errorMessage}</span>
+        </div>
+      )}
+
       <div className="flex justify-between text-xs w-full">
         <p className="w-3/5">
           En continuant, j&apos;accepte la{" "}
