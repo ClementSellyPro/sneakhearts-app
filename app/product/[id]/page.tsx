@@ -49,20 +49,16 @@ export default function ProductPage() {
       setIsLoading(true);
       setErrorSizeMessage(null);
 
-      if (selectedSize !== "") {
-        const response = await fetch("/api/favorites", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ productId: productData?.id }),
-        });
+      const response = await fetch("/api/favorites", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId: productData?.id }),
+      });
 
-        if (response.ok) {
-          alert("Produit ajouté aux favoris");
-        } else {
-          alert("Une erreur s'est produit en ajoutant le produit aux favoris");
-        }
+      if (response.ok) {
+        alert("Produit ajouté aux favoris");
       } else {
-        setErrorSizeMessage("Veuillez sélectionner une taille.");
+        alert("Une erreur s'est produit en ajoutant le produit aux favoris");
       }
     } catch (error) {
       console.error("Erreur : ", error);
