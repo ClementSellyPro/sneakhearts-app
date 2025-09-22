@@ -7,8 +7,12 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import VariationList from "@/components/product-page/VariationList";
+import { useRouter } from "next/navigation";
+import { useSession } from "@/lib/auth-client";
 
 export default function ProductPage() {
+  const router = useRouter();
+  const { data: session } = useSession();
   const param = useParams();
   const { getProductById } = useProducts();
   const [productData, setProductData] = useState<ProductWithVariations>();
@@ -32,6 +36,12 @@ export default function ProductPage() {
   function onSelectSize(e: React.MouseEvent<HTMLDivElement>) {
     const target = e.target as HTMLElement;
     setSelectedSize(target.innerText);
+  }
+
+  function onAddFavorite() {
+    if (!session?.user) {
+      router.push("/register");
+    }
   }
 
   return (
@@ -100,7 +110,10 @@ export default function ProductPage() {
 
         <div className="flex flex-col gap-4 w-full">
           <Button className="w-full">Ajouter au panier</Button>
-          <button className="px-8 py-2 rounded-full text-lg hover:bg-black hover:text-white cursor-pointer border">
+          <button
+            className="px-8 py-2 rounded-full text-lg hover:bg-gray-200 cursor-pointer border"
+            onClick={onAddFavorite}
+          >
             Ajouter aux favoris
           </button>
         </div>
