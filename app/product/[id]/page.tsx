@@ -20,6 +20,8 @@ export default function ProductPage() {
     param.id!.toString()
   );
   const [selectedSize, setSelectedSize] = useState<string>("");
+  const [errorSizeMessage, setErrorSizeMessage] = useState<null | string>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const productVariation = productData?.variations.find(
     (variation) => variation.id === currentVariation
@@ -38,9 +40,34 @@ export default function ProductPage() {
     setSelectedSize(target.innerText);
   }
 
-  function onAddFavorite() {
+  async function onAddFavorite() {
     if (!session?.user) {
       router.push("/register");
+    }
+
+    try {
+      setIsLoading(true);
+      setErrorSizeMessage(null);
+
+      if (selectedSize !== "") {
+        const response = await fetch("/api/favorites", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ productId: productData?.id }),
+        });
+
+        if (response.ok) {
+          alert("Produit ajouté aux favoris");
+        } else {
+          alert("Une erreur s'est produit en ajoutant le produit aux favoris");
+        }
+      } else {
+        setErrorSizeMessage("Veuillez sélectionner une taille.");
+      }
+    } catch (error) {
+      console.error("Erreur : ", error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -106,6 +133,9 @@ export default function ProductPage() {
               </div>
             ))}
           </div>
+          <div className="text-red-500">
+            {errorSizeMessage && errorSizeMessage}
+          </div>
         </div>
 
         <div className="flex flex-col gap-4 w-full">
@@ -114,7 +144,7 @@ export default function ProductPage() {
             className="px-8 py-2 rounded-full text-lg hover:bg-gray-200 cursor-pointer border"
             onClick={onAddFavorite}
           >
-            Ajouter aux favoris
+            {isLoading ? "Ajout..." : "Ajouter aux favoris"}
           </button>
         </div>
       </div>
