@@ -53,7 +53,10 @@ export default function FavoritesPage() {
           </p>
         ) : (
           <div className="flex gap-4 flex-wrap">
-            <div className="flex justify-center items-center border rounded-xl w-[250px] h-[300px] text-gray-200 border-gray-500">
+            <div
+              onClick={() => console.log(favoritesData)}
+              className="flex justify-center items-center border rounded-xl w-[250px] h-[300px] text-gray-200 border-gray-500"
+            >
               ITEM
             </div>
             <div className="flex justify-center items-center border rounded-xl w-[250px] h-[300px] text-gray-200 border-gray-500">

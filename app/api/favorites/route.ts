@@ -63,28 +63,69 @@ export async function GET(request: NextRequest) {
     });
 
     if (!session?.user) {
-      return NextResponse.json({ favorites: [] });
+      return NextResponse.json(
+        { error: "Non autorisé. Veuillez vous connecter." },
+        { status: 401 }
+      );
     }
 
     const favorites = await prisma.favorite.findMany({
       where: {
         userId: session.user.id,
       },
-      select: {
-        productId: true,
-        createdAt: true,
+      include: {
+        product: {
+          include: {
+            variations: {
+              take: 1,
+              select: {
+                id: true,
+                colorway: true,
+                thumbnailUrl: true,
+                largeUrl: true,
+                price: true,
+                salePrice: true,
+                alt: true,
+              },
+            },
+          },
+        },
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: "desc", // Les plus récents d'abord
       },
     });
 
+    const formattedFavorites = favorites.map((favorite) => ({
+      id: favorite.id,
+      addedAt: favorite.createdAt,
+      product: {
+        id: favorite.product.id,
+        productId: favorite.product.productId,
+        name: favorite.product.name,
+        brand: favorite.product.brand,
+        basePrice: favorite.product.basePrice,
+        category: favorite.product.category,
+        gender: favorite.product.gender,
+        // Informations de la première variation
+        image: favorite.product.variations[0]?.thumbnailUrl || null,
+        largeImage: favorite.product.variations[0]?.largeUrl || null,
+        currentPrice:
+          favorite.product.variations[0]?.salePrice ||
+          favorite.product.variations[0]?.price ||
+          favorite.product.basePrice,
+        colorway: favorite.product.variations[0]?.colorway || null,
+      },
+    }));
+
     return NextResponse.json({
-      favoriteProductIds: favorites.map((f) => f.productId),
-      favorites,
+      favorites: formattedFavorites,
     });
   } catch (error) {
-    console.error("Erreur récupération favoris:", error);
-    return NextResponse.json({ favorites: [] });
+    console.error("Erreur recuperation favoris: ", error);
+    return NextResponse.json(
+      { error: "Erreur interne du serveur" },
+      { status: 500 }
+    );
   }
 }
