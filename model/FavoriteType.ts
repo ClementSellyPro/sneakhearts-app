@@ -7,7 +7,7 @@ export interface FavoriteProduct {
   category: string;
   gender: string;
   image: string | null;
-  largeImage: string | null;
+  largeImage: string;
   currentPrice: number;
   colorway: string | null;
 }

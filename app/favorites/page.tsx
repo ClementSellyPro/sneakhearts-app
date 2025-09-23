@@ -55,13 +55,17 @@ export default function FavoritesPage() {
       <div className="flex flex-col gap-4">
         <h1 className="text-xl font-semibold">Articles Favoris</h1>
 
-        {favoritesData.length > 0 ? (
-          favoritesData.map((fav) => (
-            <FavoriteCard favorite={fav} key={fav.id} />
-          ))
-        ) : (
-          <p>Il n&apos;y a aucun article ajouté comme favori pour le moment.</p>
-        )}
+        <div className="grid grid-cols-3 gap-4">
+          {favoritesData.length > 0 ? (
+            favoritesData.map((fav) => (
+              <FavoriteCard favorite={fav.product} key={fav.id} />
+            ))
+          ) : (
+            <p>
+              Il n&apos;y a aucun article ajouté comme favori pour le moment.
+            </p>
+          )}
+        </div>
 
         {!session?.user ? (
           <p>
