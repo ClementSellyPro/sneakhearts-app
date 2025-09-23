@@ -55,3 +55,36 @@ export async function POST(request: NextRequest) {
     console.error("Erreur : ", error);
   }
 }
+
+export async function GET(request: NextRequest) {
+  try {
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
+
+    if (!session?.user) {
+      return NextResponse.json({ favorites: [] });
+    }
+
+    const favorites = await prisma.favorite.findMany({
+      where: {
+        userId: session.user.id,
+      },
+      select: {
+        productId: true,
+        createdAt: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return NextResponse.json({
+      favoriteProductIds: favorites.map((f) => f.productId),
+      favorites,
+    });
+  } catch (error) {
+    console.error("Erreur récupération favoris:", error);
+    return NextResponse.json({ favorites: [] });
+  }
+}

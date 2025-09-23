@@ -2,9 +2,37 @@
 
 import { useSession } from "@/lib/auth-client";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function FavoritesPage() {
-  const { data: session } = useSession();
+  const { data: session, isPending: sessionLoading } = useSession();
+  const [favoritesData, setFavoritesData] = useState();
+
+  async function getFavorites() {
+    try {
+      const response = await fetch("/api/favorites");
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de la recuperation des favoris");
+      }
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error("Erreur : ", error);
+      return [];
+    }
+  }
+
+  useEffect(() => {
+    const loadFavorites = async () => {
+      const userFavorites = await getFavorites();
+      setFavoritesData(userFavorites);
+    };
+
+    if (!sessionLoading && session?.user) {
+      loadFavorites();
+    }
+  }, []);
 
   return (
     <div className="flex justify-between h-screen px-52 py-18">
