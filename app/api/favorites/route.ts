@@ -92,7 +92,7 @@ export async function GET(request: NextRequest) {
         },
       },
       orderBy: {
-        createdAt: "desc", // Les plus récents d'abord
+        createdAt: "desc",
       },
     });
 
@@ -107,7 +107,7 @@ export async function GET(request: NextRequest) {
         basePrice: favorite.product.basePrice,
         category: favorite.product.category,
         gender: favorite.product.gender,
-        // Informations de la première variation
+
         image: favorite.product.variations[0]?.thumbnailUrl || null,
         largeImage: favorite.product.variations[0]?.largeUrl || null,
         currentPrice:

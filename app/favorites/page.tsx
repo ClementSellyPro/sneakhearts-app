@@ -1,44 +1,67 @@
 "use client";
 
+import FavoriteCard from "@/components/favorites/FavoriteCard";
 import { useSession } from "@/lib/auth-client";
+import { Favorite, FavoritesResponse } from "@/model/FavoriteType";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function FavoritesPage() {
   const { data: session, isPending: sessionLoading } = useSession();
-  const [favoritesData, setFavoritesData] = useState();
+  const [favoritesData, setFavoritesData] = useState<Favorite[]>([]);
+  const [favoritesLoading, setFavoritesLoading] = useState(false);
 
-  async function getFavorites() {
+  async function getFavorites(): Promise<Favorite[]> {
     try {
       const response = await fetch("/api/favorites");
 
       if (!response.ok) {
         throw new Error("Erreur lors de la recuperation des favoris");
       }
-      const data = response.json();
-      return data;
+      const data: FavoritesResponse = await response.json();
+      return data.favorites;
     } catch (error) {
       console.error("Erreur : ", error);
       return [];
     }
   }
 
-  useEffect(() => {
-    const loadFavorites = async () => {
-      const userFavorites = await getFavorites();
-      setFavoritesData(userFavorites);
-    };
+  async function loadFavorites() {
+    setFavoritesLoading(true);
 
+    try {
+      const favorites = await getFavorites();
+      setFavoritesData(favorites);
+    } catch (error) {
+      console.error("Erreur: ", error);
+      setFavoritesData([]);
+    } finally {
+      setFavoritesLoading(false);
+    }
+  }
+
+  useEffect(() => {
     if (!sessionLoading && session?.user) {
       loadFavorites();
+    } else {
+      setFavoritesData([]);
     }
   }, []);
+
+  if (favoritesLoading) return <p>Chargement...</p>;
 
   return (
     <div className="flex justify-between h-screen px-52 py-18">
       <div className="flex flex-col gap-4">
         <h1 className="text-xl font-semibold">Articles Favoris</h1>
-        <p>Il n&apos;y a aucun article ajoute comme favoris pour le moment.</p>
+
+        {favoritesData.length > 0 ? (
+          favoritesData.map((fav) => (
+            <FavoriteCard favorite={fav} key={fav.id} />
+          ))
+        ) : (
+          <p>Il n&apos;y a aucun article ajouté comme favori pour le moment.</p>
+        )}
 
         {!session?.user ? (
           <p>
@@ -51,34 +74,7 @@ export default function FavoritesPage() {
             </Link>{" "}
             pour ajouter des articles.
           </p>
-        ) : (
-          <div className="flex gap-4 flex-wrap">
-            <div
-              onClick={() => console.log(favoritesData)}
-              className="flex justify-center items-center border rounded-xl w-[250px] h-[300px] text-gray-200 border-gray-500"
-            >
-              ITEM
-            </div>
-            <div className="flex justify-center items-center border rounded-xl w-[250px] h-[300px] text-gray-200 border-gray-500">
-              ITEM
-            </div>
-            <div className="flex justify-center items-center border rounded-xl w-[250px] h-[300px] text-gray-200 border-gray-500">
-              ITEM
-            </div>
-            <div className="flex justify-center items-center border rounded-xl w-[250px] h-[300px] text-gray-200 border-gray-500">
-              ITEM
-            </div>
-            <div className="flex justify-center items-center border rounded-xl w-[250px] h-[300px] text-gray-200 border-gray-500">
-              ITEM
-            </div>
-            <div className="flex justify-center items-center border rounded-xl w-[250px] h-[300px] text-gray-200 border-gray-500">
-              ITEM
-            </div>
-            <div className="flex justify-center items-center border rounded-xl w-[250px] h-[300px] text-gray-200 border-gray-500">
-              ITEM
-            </div>
-          </div>
-        )}
+        ) : null}
       </div>
     </div>
   );
