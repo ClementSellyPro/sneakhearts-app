@@ -49,6 +49,27 @@ export default function FavoritesPage() {
     //eslint-disable-next-line
   }, []);
 
+  async function onDeleteFavItem(favoriteId: string) {
+    try {
+      const response = await fetch("/api/favorites", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId: favoriteId }),
+      });
+
+      if (!response.ok) {
+        alert("Erreur lors de la suppression.");
+      } else {
+        setFavoritesData(
+          favoritesData.filter((fav) => fav.product.id !== favoriteId)
+        );
+      }
+    } catch (error) {
+      console.error("Erreur: ", error);
+      throw new Error();
+    }
+  }
+
   if (favoritesLoading) return <p>Chargement...</p>;
 
   return (
@@ -59,7 +80,11 @@ export default function FavoritesPage() {
         <div className="grid grid-cols-3 gap-4">
           {favoritesData.length > 0 ? (
             favoritesData.map((fav) => (
-              <FavoriteCard favorite={fav.product} key={fav.id} />
+              <FavoriteCard
+                onDeleteFavItem={onDeleteFavItem}
+                favorite={fav.product}
+                key={fav.id}
+              />
             ))
           ) : (
             <p>

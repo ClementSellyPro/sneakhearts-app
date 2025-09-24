@@ -4,26 +4,13 @@ import { Trash2 } from "lucide-react";
 
 interface FavoriteCardProps {
   favorite: FavoriteProduct;
+  onDeleteFavItem(favoriteId: string): Promise<void>;
 }
 
-export default function FavoriteCard({ favorite }: FavoriteCardProps) {
-  async function onDeleteFavItem() {
-    try {
-      const response = await fetch("/api/favorites", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId: favorite.id }),
-      });
-
-      if (!response.ok) {
-        alert("Erreur lors de la suppression.");
-      }
-    } catch (error) {
-      console.error("Erreur: ", error);
-      throw new Error();
-    }
-  }
-
+export default function FavoriteCard({
+  favorite,
+  onDeleteFavItem,
+}: FavoriteCardProps) {
   return (
     <div className="relative flex gap-4 items-start pr-4 border rounded-xl  text-gray-200 border-gray-300 overflow-hidden cursor-pointer hover:border-gray-500">
       <Image
@@ -42,7 +29,7 @@ export default function FavoriteCard({ favorite }: FavoriteCardProps) {
         <button
           className="absolute bottom-2 right-2 w-fit px-4 text-sm border rounded-full border-red-500 hover:text-red-500"
           type="button"
-          onClick={onDeleteFavItem}
+          onClick={() => onDeleteFavItem(favorite.id)}
         >
           <Trash2 className="w-4" />
         </button>
