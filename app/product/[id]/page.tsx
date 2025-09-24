@@ -43,6 +43,7 @@ export default function ProductPage() {
   async function onAddFavorite() {
     if (!session?.user) {
       router.push("/register");
+      return;
     }
 
     try {
