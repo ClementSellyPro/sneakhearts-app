@@ -46,6 +46,7 @@ export default function FavoritesPage() {
     } else {
       setFavoritesData([]);
     }
+    //eslint-disable-next-line
   }, []);
 
   if (favoritesLoading) return <p>Chargement...</p>;
