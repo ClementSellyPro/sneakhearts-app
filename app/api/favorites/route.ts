@@ -101,7 +101,7 @@ export async function GET(request: NextRequest) {
       addedAt: favorite.createdAt,
       product: {
         id: favorite.product.id,
-        productId: favorite.product.productId,
+        productId: favorite.product.variations[0].id,
         name: favorite.product.name,
         brand: favorite.product.brand,
         basePrice: favorite.product.basePrice,
