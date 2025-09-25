@@ -22,6 +22,7 @@ export default function ProductPage() {
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [errorSizeMessage, setErrorSizeMessage] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingCart, setIsLoadingCart] = useState(false);
 
   const productVariation = productData?.variations.find(
     (variation) => variation.id === currentVariation
@@ -38,6 +39,37 @@ export default function ProductPage() {
   function onSelectSize(e: React.MouseEvent<HTMLDivElement>) {
     const target = e.target as HTMLElement;
     setSelectedSize(target.innerText);
+  }
+
+  async function onAddToCart() {
+    if (!session?.user) {
+      router.push("/register");
+      return;
+    }
+
+    try {
+      setIsLoadingCart(true);
+
+      const response = await fetch("/api/cart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          variationId: productVariation?.id,
+          size: selectedSize,
+          quantity: 1,
+        }),
+      });
+
+      if (response.ok) {
+        alert("Produit ajouté au panier.");
+      } else {
+        alert("Une erreur s'est produit en ajoutant le produit au panier.");
+      }
+    } catch (error) {
+      console.error("Erreur :", error);
+    } finally {
+      setIsLoadingCart(false);
+    }
   }
 
   async function onAddFavorite() {
@@ -136,10 +168,12 @@ export default function ProductPage() {
         </div>
 
         <div className="flex flex-col gap-4 w-full">
-          <Button className="w-full">Ajouter au panier</Button>
+          <Button type="button" onClick={onAddToCart} className="w-full">
+            {isLoadingCart ? "Ajout..." : "Ajouter au panier"}
+          </Button>
           <button
-            className="px-8 py-2 rounded-full text-lg hover:bg-gray-200 cursor-pointer border"
             onClick={onAddFavorite}
+            className="px-8 py-2 rounded-full text-lg hover:bg-gray-200 cursor-pointer border"
           >
             {isLoading ? "Ajout..." : "Ajouter aux favoris"}
           </button>
