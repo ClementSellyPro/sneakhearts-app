@@ -138,6 +138,7 @@ model CartItem {
   variationId String
   size        String
   quantity    Int      @default(1)
+  price       Float
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

@@ -60,6 +60,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const currentPrice = variation.salePrice || variation.price;
+
     const sizeInfo = variation.sizes[0];
     if (!sizeInfo) {
       return NextResponse.json(
@@ -110,6 +112,7 @@ export async function POST(request: NextRequest) {
         },
         data: {
           quantity: newQuantity,
+          price: currentPrice,
         },
         include: {
           variation: {
@@ -139,6 +142,7 @@ export async function POST(request: NextRequest) {
           variationId: variationId,
           size: size,
           quantity: quantity,
+          price: currentPrice,
         },
         include: {
           variation: {
