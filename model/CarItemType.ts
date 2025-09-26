@@ -1,4 +1,4 @@
-export interface CartItem {
+export interface CartItemType {
   id: string;
   quantity: number;
   priceAtTime: number;
@@ -17,7 +17,7 @@ export interface CartItem {
 }
 
 export interface CartItemResponse {
-  cartItems: CartItem[];
+  cartItems: CartItemType[];
   total: number;
   itemCount: number;
 }
