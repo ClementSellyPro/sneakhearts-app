@@ -173,3 +173,59 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+export async function GET(request: NextRequest) {
+  try {
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
+
+    if (!session?.user) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    const cartItems = await prisma.cartItem.findMany({
+      where: { userId: session.user.id },
+      include: {
+        variation: {
+          include: {
+            product: true,
+          },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    const total = cartItems.reduce((sum, item) => {
+      return sum + item.price * item.quantity;
+    }, 0);
+
+    const formattedItems = cartItems.map((item) => ({
+      id: item.id,
+      quantity: item.quantity,
+      priceAtTime: item.price,
+      currentPrice: item.variation.salePrice || item.variation.price,
+      subtotal: item.price * item.quantity,
+      priceChanged:
+        item.price !== (item.variation.salePrice || item.variation.price),
+      size: item.size,
+      addedAt: item.createdAt,
+      product: {
+        id: item.variation.product.id,
+        name: item.variation.product.name,
+        brand: item.variation.product.brand,
+        colorway: item.variation.colorway,
+        image: item.variation.thumbnailUrl,
+      },
+    }));
+
+    return NextResponse.json({
+      cartItems: formattedItems,
+      total,
+      itemCount: cartItems.reduce((sum, item) => sum + item.quantity, 0),
+    });
+  } catch (error) {
+    console.error("Erreur:", error);
+    return NextResponse.json({ error: "Erreur interne" }, { status: 500 });
+  }
+}
