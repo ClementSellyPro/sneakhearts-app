@@ -39,15 +39,17 @@ export default function Cart() {
 
   return (
     <div className="flex justify-between h-screen px-52 py-18">
-      <div className="flex flex-col gap-4">
-        <h1 className="text-xl font-semibold">Panier</h1>
-        {cartData.cartItems.length > 0 ? (
-          cartData.cartItems.map((item) => (
-            <CartItem key={item.id} cartItemData={item} />
-          ))
-        ) : (
-          <p>Il n&apos;y a aucun article dans ton panier.</p>
-        )}
+      <div className="flex flex-col gap-12 w-7/12">
+        <h1 className="text-3xl font-semibold text-center">VOTRE PANIER:</h1>
+        <div className="flex flex-col gap-4">
+          {cartData.cartItems.length > 0 ? (
+            cartData.cartItems.map((item) => (
+              <CartItem key={item.id} cartItemData={item} />
+            ))
+          ) : (
+            <p>Il n&apos;y a aucun article dans ton panier.</p>
+          )}
+        </div>
 
         {!session?.user ? (
           <p>
@@ -65,24 +67,27 @@ export default function Cart() {
         )}
       </div>
 
-      <div className="flex flex-col gap-8 w-2/6">
+      <div className="flex flex-col gap-8 w-4/12">
         <h2 className="text-xl font-semibold">Récapitulatif</h2>
 
         {cartData.itemCount > 0 ? (
           <div className="flex flex-col gap-4">
             {cartData.cartItems.map((item) => (
               <div key={item.id} className="flex justify-between">
-                <p>{item.product.name}</p>
-                <p>{item.priceAtTime}</p>
+                <p>
+                  - {item.product.name}
+                  <span className="text-sm"> x {item.quantity}</span>
+                </p>
+                <p>{item.currentPrice}$</p>
               </div>
             ))}
           </div>
         ) : null}
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 pt-4 border-t">
           <div className="flex justify-between">
             <p>Sous-total</p>
-            {cartData.itemCount > 0 ? cartData.total : <p>---</p>}
+            {cartData.itemCount > 0 ? cartData.total + "$" : <p>---</p>}
           </div>
 
           <div className="flex justify-between">
@@ -91,9 +96,9 @@ export default function Cart() {
           </div>
         </div>
 
-        <div className="flex justify-between py-4 border-t border-b font-semibold">
+        <div className="flex justify-between text-xl py-4 border-t border-b font-semibold">
           <p>Total</p>
-          {cartData.itemCount > 0 ? cartData.total : <p>---</p>}
+          <p>{cartData.itemCount > 0 ? cartData.total + "$" : "---"}</p>
         </div>
 
         <Button>Paiement</Button>
