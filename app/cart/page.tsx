@@ -2,10 +2,33 @@
 
 import Button from "@/components/ui/Button";
 import { useSession } from "@/lib/auth-client";
+import { CartItem } from "@/model/CarItemType";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Cart() {
   const { data: session } = useSession();
+  const [cartData, setCartData] = useState<CartItem[]>([]);
+
+  async function getCartItems() {
+    try {
+      const response = await fetch("/api/cart");
+      if (!response.ok) {
+        console.error("Erreur lors de la récupération des données du panier.");
+        setCartData([]);
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setCartData(data);
+    } catch (error) {
+      console.error("Erreur : ", error);
+    }
+  }
+
+  useEffect(() => {
+    getCartItems();
+  }, []);
 
   return (
     <div className="flex justify-between h-screen px-52 py-18">
