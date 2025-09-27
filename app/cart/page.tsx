@@ -22,7 +22,6 @@ export default function Cart() {
       }
 
       const data = await response.json();
-      console.log(data);
       setCartData(data);
     } catch (error) {
       console.error("Erreur : ", error);

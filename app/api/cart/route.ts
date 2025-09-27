@@ -268,9 +268,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     const deletedCartItem = await prisma.cartItem.delete({
-      where: {
-        id: cartItemId.id,
-      },
+      where: { id: cartItemId },
     });
 
     return NextResponse.json({

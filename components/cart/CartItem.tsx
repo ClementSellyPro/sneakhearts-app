@@ -6,6 +6,25 @@ interface CartItemProps {
 }
 
 export default function CartItem({ cartItemData }: CartItemProps) {
+  async function onDeleteCartItem() {
+    try {
+      const response = await fetch("/api/cart", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cartItemId: cartItemData.id }),
+      });
+
+      if (!response.ok) {
+        alert("Erreur lors de la suppression de l'article.");
+        return;
+      } else {
+        alert("Suppression reussi");
+      }
+    } catch (error) {
+      console.error("Erreur: ", error);
+    }
+  }
+
   return (
     <div className="flex border-b border-gray-300 pb-4">
       <Image
@@ -30,6 +49,7 @@ export default function CartItem({ cartItemData }: CartItemProps) {
           width={15}
           height={15}
           className="cursor-pointer hover:opacity-60"
+          onClick={onDeleteCartItem}
         />
       </div>
     </div>
