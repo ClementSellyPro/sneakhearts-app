@@ -229,3 +229,59 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Erreur interne" }, { status: 500 });
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
+
+    if (!session?.user) {
+      return NextResponse.json({ error: "Non autorise" }, { status: 401 });
+    }
+
+    const { cartItemId } = await request.json();
+
+    if (!cartItemId) {
+      return NextResponse.json(
+        { error: "ID du l'article requis" },
+        { status: 400 }
+      );
+    }
+
+    const cartItem = await prisma.cartItem.findUnique({
+      where: { id: cartItemId },
+    });
+
+    if (!cartItem) {
+      return NextResponse.json(
+        { error: "Article non trouve" },
+        { status: 404 }
+      );
+    }
+
+    if (cartItem.userId !== session.user.id) {
+      return NextResponse.json(
+        { error: "Non autorise a supprimer cet article" },
+        { status: 403 }
+      );
+    }
+
+    const deletedCartItem = await prisma.cartItem.delete({
+      where: {
+        id: cartItemId.id,
+      },
+    });
+
+    return NextResponse.json({
+      message: "Produit retiré du panier",
+      deletedCartItem,
+    });
+  } catch (error) {
+    console.error("Erreur suppression panier:", error);
+    return NextResponse.json(
+      { error: "Erreur interne du serveur" },
+      { status: 500 }
+    );
+  }
+}

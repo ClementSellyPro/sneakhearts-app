@@ -74,9 +74,12 @@ export default function Cart() {
           <div className="flex flex-col gap-4">
             {cartData.cartItems.map((item) => (
               <div key={item.id} className="flex justify-between">
-                <p>
+                <p className="flex-1">
                   - {item.product.name}
-                  <span className="text-sm"> x {item.quantity}</span>
+                  <span className="text-sm font-semibold">
+                    {" "}
+                    x {item.quantity}
+                  </span>
                 </p>
                 <p>{item.currentPrice}$</p>
               </div>
