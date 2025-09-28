@@ -89,7 +89,11 @@ export default function Cart() {
         <div className="flex flex-col gap-4 pt-4 border-t">
           <div className="flex justify-between">
             <p>Sous-total</p>
-            {cartData.itemCount > 0 ? cartData.total + "$" : <p>---</p>}
+            {cartData.itemCount > 0 ? (
+              cartData.total.toFixed(2) + "$"
+            ) : (
+              <p>---</p>
+            )}
           </div>
 
           <div className="flex justify-between">
@@ -100,7 +104,9 @@ export default function Cart() {
 
         <div className="flex justify-between text-xl py-4 border-t border-b font-semibold">
           <p>Total</p>
-          <p>{cartData.itemCount > 0 ? cartData.total + "$" : "---"}</p>
+          <p>
+            {cartData.itemCount > 0 ? cartData.total.toFixed(2) + "$" : "---"}
+          </p>
         </div>
 
         <Button>Paiement</Button>

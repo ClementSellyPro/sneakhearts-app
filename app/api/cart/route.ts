@@ -211,7 +211,7 @@ export async function GET(request: NextRequest) {
       size: item.size,
       addedAt: item.createdAt,
       product: {
-        id: item.variation.product.id,
+        id: item.variation.product.productId,
         name: item.variation.product.name,
         brand: item.variation.product.brand,
         colorway: item.variation.colorway,
