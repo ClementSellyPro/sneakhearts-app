@@ -210,8 +210,10 @@ export async function GET(request: NextRequest) {
         item.price !== (item.variation.salePrice || item.variation.price),
       size: item.size,
       addedAt: item.createdAt,
+
       product: {
         id: item.variation.product.productId,
+        variationId: item.variation.id,
         name: item.variation.product.name,
         brand: item.variation.product.brand,
         colorway: item.variation.colorway,

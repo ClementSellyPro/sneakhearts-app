@@ -9,6 +9,7 @@ export interface CartItemType {
   addedAt: Date;
   product: {
     id: string;
+    variationId: string;
     name: string;
     brand: string;
     colorway: string;

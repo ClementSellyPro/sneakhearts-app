@@ -37,7 +37,7 @@ export default function Cart() {
   if (isloadingCartData || !cartData) return <div>Chargement ...</div>;
 
   return (
-    <div className="flex justify-between h-screen px-52 py-18">
+    <div className="flex justify-between min-h-screen px-52 py-18">
       <div className="flex flex-col gap-12 w-7/12">
         <h1 className="text-3xl font-semibold text-center">VOTRE PANIER:</h1>
         <div className="flex flex-col gap-4">
