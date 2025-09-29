@@ -29,9 +29,13 @@ export default function ProductPage() {
   );
 
   useEffect(() => {
-    const currentProductData: ProductWithVariations | undefined =
-      getProductById(param.id!.toString());
-    setProductData(currentProductData);
+    async function fetchProduct() {
+      const response = await fetch(`/api/products/${param.id?.toString()}`);
+      const data = await response.json();
+      console.log(data);
+      setProductData(data);
+    }
+    fetchProduct();
   }, [setProductData, getProductById, param.id]);
 
   if (!productData) return <p>Chargement...</p>;
