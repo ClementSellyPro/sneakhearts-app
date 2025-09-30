@@ -3,7 +3,6 @@
 import { FavoriteProduct } from "@/model/FavoriteType";
 import Image from "next/image";
 import { Trash2 } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface FavoriteCardProps {
@@ -26,7 +25,6 @@ export default function FavoriteCard({
   }
 
   return (
-    // <Link href={`/product/${favorite.productId}`}>
     <div
       onClick={(e: React.MouseEvent<HTMLElement>) => handleRedirection(e)}
       className="relative flex gap-4 items-start pr-4 border rounded-xl  text-gray-200 border-gray-300 overflow-hidden cursor-pointer hover:border-gray-500"
@@ -53,6 +51,5 @@ export default function FavoriteCard({
         </button>
       </div>
     </div>
-    // </Link>
   );
 }
