@@ -6,29 +6,14 @@ import { useRouter } from "next/navigation";
 
 interface CartItemProps {
   cartItemData: CartItemType;
+  onDeleteCartItem(cartItemId: string): Promise<void>;
 }
 
-export default function CartItem({ cartItemData }: CartItemProps) {
+export default function CartItem({
+  cartItemData,
+  onDeleteCartItem,
+}: CartItemProps) {
   const router = useRouter();
-
-  async function onDeleteCartItem() {
-    try {
-      const response = await fetch("/api/cart", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cartItemId: cartItemData.id }),
-      });
-
-      if (!response.ok) {
-        alert("Erreur lors de la suppression de l'article.");
-        return;
-      } else {
-        alert("Suppression reussi");
-      }
-    } catch (error) {
-      console.error("Erreur: ", error);
-    }
-  }
 
   function handleRedirection(e: React.MouseEvent<HTMLElement>) {
     const target = e.target as HTMLElement;
@@ -63,7 +48,7 @@ export default function CartItem({ cartItemData }: CartItemProps) {
           width={15}
           height={15}
           className="button-delete cursor-pointer hover:opacity-60"
-          onClick={onDeleteCartItem}
+          onClick={() => onDeleteCartItem(cartItemData.id)}
         />
       </div>
     </div>

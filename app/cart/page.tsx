@@ -30,6 +30,26 @@ export default function Cart() {
     }
   }
 
+  async function onDeleteCartItem(cartItemId: string) {
+    try {
+      const response = await fetch("/api/cart", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cartItemId: cartItemId }),
+      });
+
+      if (!response.ok) {
+        alert("Erreur lors de la suppression de l'article.");
+        return;
+      } else {
+        alert("Suppression reussi");
+        await getCartItems();
+      }
+    } catch (error) {
+      console.error("Erreur: ", error);
+    }
+  }
+
   useEffect(() => {
     getCartItems();
   }, []);
@@ -43,7 +63,11 @@ export default function Cart() {
         <div className="flex flex-col gap-4">
           {cartData.cartItems.length > 0 ? (
             cartData.cartItems.map((item) => (
-              <CartItem key={item.id} cartItemData={item} />
+              <CartItem
+                onDeleteCartItem={onDeleteCartItem}
+                key={item.id}
+                cartItemData={item}
+              />
             ))
           ) : (
             <p>Il n&apos;y a aucun article dans ton panier.</p>
