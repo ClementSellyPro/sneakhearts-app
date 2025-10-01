@@ -5,7 +5,8 @@ import Button from "@/components/ui/Button";
 import { useSession } from "@/lib/auth-client";
 import { CartItemResponse } from "@/model/CarItemType";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
+import { deleteCartItemAction } from "../action";
 
 interface CartContentProps {
   cartListData: CartItemResponse;
@@ -14,30 +15,36 @@ interface CartContentProps {
 export default function CartContent({ cartListData }: CartContentProps) {
   const { data: session } = useSession();
   const [cartData, setCartData] = useState<CartItemResponse>();
+  //eslint-disable-next-line
+  const [isPending, startTransition] = useTransition();
+
+  function handleDelete(cartItemId: string) {
+    setCartData((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        cartItems: prev.cartItems.filter((item) => item.id !== cartItemId),
+        itemCount: prev.itemCount,
+        total:
+          prev.total -
+          (prev.cartItems.find((i) => i.id === cartItemId)?.subtotal ?? 0),
+      };
+    });
+
+    startTransition(async () => {
+      try {
+        await deleteCartItemAction(cartItemId);
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Erreur lors de la suppression");
+      }
+    });
+  }
 
   useEffect(() => {
     setCartData(cartListData);
     //eslint-disable-next-line
   }, []);
-
-  async function onDeleteCartItem(cartItemId: string) {
-    try {
-      const response = await fetch("/api/cart", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cartItemId: cartItemId }),
-      });
-
-      if (!response.ok) {
-        alert("Erreur lors de la suppression de l'article.");
-        return;
-      } else {
-        alert("Suppression reussi");
-      }
-    } catch (error) {
-      console.error("Erreur: ", error);
-    }
-  }
 
   if (!cartData) return <div>Chargement...</div>;
 
@@ -49,7 +56,7 @@ export default function CartContent({ cartListData }: CartContentProps) {
           {cartData.cartItems.length > 0 ? (
             cartData.cartItems.map((item) => (
               <CartItem
-                onDeleteCartItem={onDeleteCartItem}
+                onDeleteCartItem={handleDelete}
                 key={item.id}
                 cartItemData={item}
               />

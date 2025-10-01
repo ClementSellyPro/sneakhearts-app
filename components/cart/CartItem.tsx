@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 interface CartItemProps {
   cartItemData: CartItemType;
-  onDeleteCartItem(cartItemId: string): Promise<void>;
+  onDeleteCartItem(cartItemId: string): void;
 }
 
 export default function CartItem({
