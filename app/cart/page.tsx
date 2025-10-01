@@ -1,140 +1,73 @@
-"use client";
+import { PrismaClient } from "@prisma/client";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import CartContent from "./components/CartContent";
 
-import CartItem from "@/components/cart/CartItem";
-import Button from "@/components/ui/Button";
-import { useSession } from "@/lib/auth-client";
-import { CartItemResponse } from "@/model/CarItemType";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+const prisma = new PrismaClient();
 
-export default function Cart() {
-  const { data: session } = useSession();
-  const [cartData, setCartData] = useState<CartItemResponse>();
-  const [isloadingCartData, setLoadingCartData] = useState(false);
+export default async function Cart() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-  async function getCartItems() {
-    try {
-      setLoadingCartData(true);
-
-      const response = await fetch("/api/cart");
-      if (!response.ok) {
-        console.error("Erreur lors de la récupération des données du panier.");
-      }
-
-      const data = await response.json();
-      setCartData(data);
-    } catch (error) {
-      console.error("Erreur : ", error);
-    } finally {
-      setLoadingCartData(false);
-    }
+  if (!session?.user) {
+    return (
+      <div className="text-center py-8">
+        <h2 className="text-2xl font-bold mb-4">Connexion requise</h2>
+        <p className="mb-4">Veuillez vous connecter pour voir votre panier.</p>
+        <a
+          href="/login"
+          className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Se connecter
+        </a>
+      </div>
+    );
   }
 
-  async function onDeleteCartItem(cartItemId: string) {
-    try {
-      const response = await fetch("/api/cart", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cartItemId: cartItemId }),
-      });
+  const cartItems = await prisma.cartItem.findMany({
+    where: { userId: session.user.id },
+    include: {
+      variation: {
+        include: {
+          product: true,
+        },
+      },
+    },
+    orderBy: { createdAt: "desc" },
+  });
 
-      if (!response.ok) {
-        alert("Erreur lors de la suppression de l'article.");
-        return;
-      } else {
-        alert("Suppression reussi");
-        await getCartItems();
-      }
-    } catch (error) {
-      console.error("Erreur: ", error);
-    }
-  }
+  const formattedItems = cartItems.map((item) => ({
+    addedAt: item.createdAt,
+    currentPrice: item.variation.salePrice ?? item.variation.price,
+    id: item.id,
+    priceAtTime: item.price,
+    priceChanged:
+      item.price !== (item.variation.salePrice || item.variation.price),
+    product: {
+      brand: item.variation.product.brand,
+      colorway: item.variation.colorway,
+      id: item.variation.product.id,
+      image: item.variation.thumbnailUrl,
+      name: item.variation.product.name,
+      variationId: item.variation.product.productId,
+    },
+    quantity: item.quantity,
+    size: item.size,
+    subtotal: item.price * item.quantity,
+  }));
 
-  useEffect(() => {
-    getCartItems();
-  }, []);
-
-  if (isloadingCartData || !cartData) return <div>Chargement ...</div>;
-
-  return (
-    <div className="flex justify-between min-h-screen px-52 py-18">
-      <div className="flex flex-col gap-12 w-7/12">
-        <h1 className="text-3xl font-semibold text-center">VOTRE PANIER:</h1>
-        <div className="flex flex-col gap-4">
-          {cartData.cartItems.length > 0 ? (
-            cartData.cartItems.map((item) => (
-              <CartItem
-                onDeleteCartItem={onDeleteCartItem}
-                key={item.id}
-                cartItemData={item}
-              />
-            ))
-          ) : (
-            <p>Il n&apos;y a aucun article dans ton panier.</p>
-          )}
-        </div>
-
-        {!session?.user ? (
-          <p>
-            <Link href={"/login"} className="font-semibold hover:underline">
-              Se connecter
-            </Link>{" "}
-            ou{" "}
-            <Link href={"/register"} className="font-semibold hover:underline">
-              créer un compte
-            </Link>{" "}
-            pour ajouter des articles.
-          </p>
-        ) : (
-          ""
-        )}
-      </div>
-
-      <div className="flex flex-col gap-8 w-4/12">
-        <h2 className="text-xl font-semibold">Récapitulatif</h2>
-
-        {cartData.itemCount > 0 ? (
-          <div className="flex flex-col gap-4">
-            {cartData.cartItems.map((item) => (
-              <div key={item.id} className="flex justify-between">
-                <p className="flex-1">
-                  - {item.product.name}
-                  <span className="text-sm font-semibold">
-                    {" "}
-                    x {item.quantity}
-                  </span>
-                </p>
-                <p>{item.currentPrice}$</p>
-              </div>
-            ))}
-          </div>
-        ) : null}
-
-        <div className="flex flex-col gap-4 pt-4 border-t">
-          <div className="flex justify-between">
-            <p>Sous-total</p>
-            {cartData.itemCount > 0 ? (
-              cartData.total.toFixed(2) + "$"
-            ) : (
-              <p>---</p>
-            )}
-          </div>
-
-          <div className="flex justify-between">
-            <p>Frais estimes de prise en charge et d&apos;expédition.</p>
-            <p>Gratuit</p>
-          </div>
-        </div>
-
-        <div className="flex justify-between text-xl py-4 border-t border-b font-semibold">
-          <p>Total</p>
-          <p>
-            {cartData.itemCount > 0 ? cartData.total.toFixed(2) + "$" : "---"}
-          </p>
-        </div>
-
-        <Button>Paiement</Button>
-      </div>
-    </div>
+  const total = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
   );
+  const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  const cartData = {
+    cartItems: formattedItems,
+    total,
+    itemCount,
+  };
+
+  return <CartContent cartListData={cartData} />;
 }
