@@ -20,14 +20,6 @@ export default async function deleteFavoriteItemAction(favoriteItemId: string) {
       where: { id: favoriteItemId },
     });
 
-    console.log("THE FAVORITE ITEM : ", favoriteItem);
-    console.log(
-      "Deleting favorite for user:",
-      session.user.id,
-      "and productId:",
-      favoriteItemId
-    );
-
     if (!favoriteItem) {
       throw new Error("Article non trouvé");
     }

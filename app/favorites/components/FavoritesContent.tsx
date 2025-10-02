@@ -35,27 +35,6 @@ export default function FavoritesContent({
     });
   }
 
-  // async function onDeleteFavItem(favoriteId: string) {
-  //   try {
-  //     const response = await fetch("/api/favorites", {
-  //       method: "DELETE",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({ productId: favoriteId }),
-  //     });
-
-  //     if (!response.ok) {
-  //       alert("Erreur lors de la suppression.");
-  //     } else {
-  //       setFavoritesData(
-  //         favoritesData.filter((fav) => fav.product.id !== favoriteId)
-  //       );
-  //     }
-  //   } catch (error) {
-  //     console.error("Erreur: ", error);
-  //     throw new Error();
-  //   }
-  // }
-
   return (
     <div className="flex justify-between h-screen px-52 py-18">
       <div className="flex flex-col gap-4">
