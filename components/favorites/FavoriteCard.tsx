@@ -18,7 +18,7 @@ export default function FavoriteCard({
 
   function handleRedirection(e: React.MouseEvent<HTMLElement>) {
     const target = e.target as HTMLElement;
-
+    console.log(target);
     if (!target.classList.contains("button-delete")) {
       router.push(`/product/${favorite.productId}`);
     }
@@ -30,7 +30,7 @@ export default function FavoriteCard({
       className="relative flex gap-4 items-start pr-4 border rounded-xl  text-gray-200 border-gray-300 overflow-hidden cursor-pointer hover:border-gray-500"
     >
       <Image
-        src={favorite.largeImage}
+        src={favorite.largeImage!}
         alt={favorite.category}
         width={150}
         height={150}

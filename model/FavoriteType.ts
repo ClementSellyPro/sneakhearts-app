@@ -7,14 +7,14 @@ export interface FavoriteProduct {
   category: string;
   gender: string;
   image: string | null;
-  largeImage: string;
+  largeImage: string | null;
   currentPrice: number;
   colorway: string | null;
 }
 
 export interface Favorite {
   id: string;
-  addedAt: string;
+  addedAt: Date;
   product: FavoriteProduct;
 }
 

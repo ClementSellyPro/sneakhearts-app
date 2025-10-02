@@ -1,111 +1,74 @@
-"use client";
+import { PrismaClient } from "@prisma/client";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import FavoritesContent from "./components/FavoritesContent";
 
-import FavoriteCard from "@/components/favorites/FavoriteCard";
-import { useSession } from "@/lib/auth-client";
-import { Favorite, FavoritesResponse } from "@/model/FavoriteType";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+const prisma = new PrismaClient();
 
-export default function FavoritesPage() {
-  const { data: session, isPending: sessionLoading } = useSession();
-  const [favoritesData, setFavoritesData] = useState<Favorite[]>([]);
-  const [favoritesLoading, setFavoritesLoading] = useState(false);
+export default async function FavoritesPage() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-  async function getFavorites(): Promise<Favorite[]> {
-    try {
-      const response = await fetch("/api/favorites");
-
-      if (!response.ok) {
-        throw new Error("Erreur lors de la recuperation des favoris");
-      }
-      const data: FavoritesResponse = await response.json();
-      return data.favorites;
-    } catch (error) {
-      console.error("Erreur : ", error);
-      return [];
-    }
-  }
-
-  async function loadFavorites() {
-    setFavoritesLoading(true);
-
-    try {
-      const favorites = await getFavorites();
-      setFavoritesData(favorites);
-    } catch (error) {
-      console.error("Erreur: ", error);
-      setFavoritesData([]);
-    } finally {
-      setFavoritesLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    if (!sessionLoading && session?.user) {
-      loadFavorites();
-    } else {
-      setFavoritesData([]);
-    }
-    //eslint-disable-next-line
-  }, []);
-
-  async function onDeleteFavItem(favoriteId: string) {
-    try {
-      const response = await fetch("/api/favorites", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId: favoriteId }),
-      });
-
-      if (!response.ok) {
-        alert("Erreur lors de la suppression.");
-      } else {
-        setFavoritesData(
-          favoritesData.filter((fav) => fav.product.id !== favoriteId)
-        );
-      }
-    } catch (error) {
-      console.error("Erreur: ", error);
-      throw new Error();
-    }
-  }
-
-  if (favoritesLoading) return <p>Chargement...</p>;
-
-  return (
-    <div className="flex justify-between h-screen px-52 py-18">
-      <div className="flex flex-col gap-4">
-        <h1 className="text-xl font-semibold">Articles Favoris</h1>
-
-        <div className="grid grid-cols-3 gap-4">
-          {favoritesData.length > 0 ? (
-            favoritesData.map((fav) => (
-              <FavoriteCard
-                onDeleteFavItem={onDeleteFavItem}
-                favorite={fav.product}
-                key={fav.id}
-              />
-            ))
-          ) : (
-            <p>
-              Il n&apos;y a aucun article ajouté comme favori pour le moment.
-            </p>
-          )}
-        </div>
-
-        {!session?.user ? (
-          <p>
-            <Link href={"/login"} className="font-semibold hover:underline">
-              Se connecter
-            </Link>{" "}
-            ou{" "}
-            <Link href={"/register"} className="font-semibold hover:underline">
-              créer un compte
-            </Link>{" "}
-            pour ajouter des articles.
-          </p>
-        ) : null}
+  if (!session?.user) {
+    return (
+      <div className="text-center py-8">
+        <h2 className="text-2xl font-bold mb-4">Connexion requise</h2>
+        <p className="mb-4">Veuillez vous connecter pour voir vos favoris.</p>
+        <a
+          href="/login"
+          className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Se connecter
+        </a>
       </div>
-    </div>
-  );
+    );
+  }
+
+  const favoriteItems = await prisma.favorite.findMany({
+    where: { userId: session.user.id },
+    include: {
+      product: {
+        include: {
+          variations: {
+            take: 1,
+            select: {
+              id: true,
+              colorway: true,
+              thumbnailUrl: true,
+              largeUrl: true,
+              price: true,
+              salePrice: true,
+              alt: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: { createdAt: "desc" },
+  });
+
+  const formattedFavorites = favoriteItems.map((favorite) => ({
+    id: favorite.id,
+    addedAt: favorite.createdAt,
+    product: {
+      id: favorite.product.id,
+      productId: favorite.product.variations[0].id,
+      name: favorite.product.name,
+      brand: favorite.product.brand,
+      basePrice: favorite.product.basePrice,
+      category: favorite.product.category,
+      gender: favorite.product.gender,
+
+      image: favorite.product.variations[0]?.thumbnailUrl || null,
+      largeImage: favorite.product.variations[0]?.largeUrl || null,
+      currentPrice:
+        favorite.product.variations[0]?.salePrice ||
+        favorite.product.variations[0]?.price ||
+        favorite.product.basePrice,
+      colorway: favorite.product.variations[0]?.colorway || null,
+    },
+  }));
+
+  return <FavoritesContent favoritesListData={formattedFavorites} />;
 }
