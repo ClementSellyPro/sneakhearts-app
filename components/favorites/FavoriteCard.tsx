@@ -18,7 +18,7 @@ export default function FavoriteCard({
 
   function handleRedirection(e: React.MouseEvent<HTMLElement>) {
     const target = e.target as HTMLElement;
-    console.log(target);
+
     if (!target.classList.contains("button-delete")) {
       router.push(`/product/${favorite.productId}`);
     }
