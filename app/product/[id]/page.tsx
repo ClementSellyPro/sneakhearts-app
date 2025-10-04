@@ -45,6 +45,13 @@ export default function ProductPage() {
   }
 
   async function onAddToCart() {
+    setErrorSizeMessage(null);
+
+    if (!selectedSize) {
+      setErrorSizeMessage("Veuillez sélectionner une taille.");
+      return;
+    }
+
     if (!session?.user) {
       router.push("/register");
       return;
@@ -83,7 +90,6 @@ export default function ProductPage() {
 
     try {
       setIsLoading(true);
-      setErrorSizeMessage(null);
 
       const response = await fetch("/api/favorites", {
         method: "POST",
