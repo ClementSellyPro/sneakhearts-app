@@ -25,6 +25,11 @@ export default function FavoritesContent({
   }, []);
 
   function handleDelete(favoriteItemId: string) {
+    setFavoritesData((prev) => {
+      if (!prev) return prev;
+      return [...prev.filter((item) => item.id !== favoriteItemId)];
+    });
+
     startTransition(async () => {
       try {
         deleteFavoriteItemAction(favoriteItemId);
