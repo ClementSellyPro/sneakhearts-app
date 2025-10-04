@@ -6,6 +6,7 @@ import { useEffect, useState, useTransition } from "react";
 import { Favorite } from "@/model/FavoriteType";
 import { useSession } from "@/lib/auth-client";
 import deleteFavoriteItemAction from "../action";
+import ModalConfirmation from "@/components/shared/ModalConfirmation";
 
 interface favoritesContentProps {
   favoritesListData: Favorite[];
@@ -18,6 +19,8 @@ export default function FavoritesContent({
   const [favoritesData, setFavoritesData] = useState<Favorite[]>([]);
   //eslint-disable-next-line
   const [isPending, startTransition] = useTransition();
+  const [isAddingConfirmation, setIsAddingConfirmation] = useState(false);
+  const [idToDelete, setIdToDelete] = useState("");
 
   useEffect(() => {
     setFavoritesData(favoritesListData);
@@ -25,17 +28,25 @@ export default function FavoritesContent({
   }, []);
 
   function handleDelete(favoriteItemId: string) {
+    setIsAddingConfirmation(true);
+    setIdToDelete(favoriteItemId);
+  }
+
+  function confirmDeleting() {
     setFavoritesData((prev) => {
       if (!prev) return prev;
-      return [...prev.filter((item) => item.id !== favoriteItemId)];
+      return [...prev.filter((item) => item.id !== idToDelete)];
     });
 
     startTransition(async () => {
       try {
-        deleteFavoriteItemAction(favoriteItemId);
+        deleteFavoriteItemAction(idToDelete);
       } catch (error) {
         console.error("Error:", error);
         alert("Erreur lors de la suppression");
+      } finally {
+        setIsAddingConfirmation(false);
+        setIdToDelete("");
       }
     });
   }
@@ -61,6 +72,13 @@ export default function FavoritesContent({
             </p>
           )}
         </div>
+
+        {isAddingConfirmation && (
+          <ModalConfirmation
+            confirmDeleting={confirmDeleting}
+            setIsAddingConfirmation={setIsAddingConfirmation}
+          />
+        )}
 
         {!session?.user ? (
           <p>
