@@ -32,7 +32,6 @@ export default function ProductPage() {
     async function fetchProduct() {
       const response = await fetch(`/api/products/${param.id?.toString()}`);
       const data = await response.json();
-      console.log(data);
       setProductData(data);
     }
     fetchProduct();

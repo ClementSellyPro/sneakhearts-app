@@ -48,7 +48,10 @@ export default function CartItem({
           width={15}
           height={15}
           className="button-delete cursor-pointer hover:opacity-60"
-          onClick={() => onDeleteCartItem(cartItemData.id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDeleteCartItem(cartItemData.id);
+          }}
         />
       </div>
     </div>
