@@ -7,7 +7,9 @@ import { useProducts } from "@/hooks/UseProducts";
 
 export default function HeaderItemsPage() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const { currentCategory, products } = useProducts();
+  const { currentCategory, getFilteredProducts } = useProducts();
+
+  const filteredProducts = getFilteredProducts();
 
   function onToggleFilter() {
     setIsFilterOpen((prev) => !prev);
@@ -18,7 +20,7 @@ export default function HeaderItemsPage() {
         <span className="text-2xl font-semibold">
           {currentCategory === "Shoes" ? "CHAUSSURE" : "VETEMENT"}
         </span>{" "}
-        ({products.length})
+        ({filteredProducts.length})
       </h1>
       <button
         onClick={onToggleFilter}
