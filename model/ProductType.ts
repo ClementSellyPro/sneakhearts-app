@@ -5,3 +5,9 @@ export type ProductWithVariations = Product & {
     sizes: ProductSize[];
   })[];
 };
+
+export type ProductWithCurrentVariation = ProductWithVariations & {
+  currentVariation: ProductVariation & {
+    sizes: ProductSize[];
+  };
+};
