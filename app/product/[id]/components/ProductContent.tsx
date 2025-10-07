@@ -10,6 +10,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
 import VariationList from "./VariationList";
+import SizeSelector from "./SizeSelector";
 
 interface ProductContentProps {
   initialData: ProductWithCurrentVariation;
@@ -35,9 +36,9 @@ export default function ProductContent({ initialData }: ProductContentProps) {
 
   if (!productData) return <p>Chargement...</p>;
 
-  function onSelectSize(e: React.MouseEvent<HTMLDivElement>) {
-    const target = e.target as HTMLElement;
-    setSelectedSize(target.innerText);
+  function onSelectSize(size: string) {
+    setSelectedSize(size);
+    setErrorSizeMessage(null);
   }
 
   async function onAddToCart() {
@@ -145,31 +146,12 @@ export default function ProductContent({ initialData }: ProductContentProps) {
           />
         </div>
 
-        <div className="flex flex-col gap-4">
-          <h2>Sélectionner la taille</h2>
-          <div className="grid grid-cols-4 gap-4">
-            {productVariation?.sizes.map((size) => (
-              <div
-                key={size.id}
-                onClick={(e: React.MouseEvent<HTMLDivElement>) =>
-                  onSelectSize(e)
-                }
-                className={`border border-gray-300 rounded-md w-fit py-1.5 px-8 cursor-pointer hover:bg-black hover:text-white ${
-                  !size.inStock && "line-through bg-gray-100 opacity-60"
-                }  ${
-                  selectedSize === size.size
-                    ? "bg-black text-white font-semibold"
-                    : ""
-                }`}
-              >
-                {size.size}
-              </div>
-            ))}
-          </div>
-          <div className="text-red-500">
-            {errorSizeMessage && errorSizeMessage}
-          </div>
-        </div>
+        <SizeSelector
+          productSizes={productVariation.sizes}
+          selectedSize={selectedSize}
+          onSelectSize={onSelectSize}
+          errorSizeMessage={errorSizeMessage}
+        />
 
         <div className="flex flex-col gap-4 w-full">
           <Button type="button" onClick={onAddToCart} className="w-full">
