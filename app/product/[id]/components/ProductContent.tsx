@@ -20,7 +20,7 @@ export default function ProductContent({ initialData }: ProductContentProps) {
   const { data: session } = useSession();
   const [productData, setProductData] = useState<ProductWithVariations>();
   const [selectedSize, setSelectedSize] = useState("");
-  const [currentVariation, setCurrentVariation] = useState("");
+  const currentVariation = initialData.currentVariation.id;
 
   const [errorSizeMessage, setErrorSizeMessage] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -142,7 +142,6 @@ export default function ProductContent({ initialData }: ProductContentProps) {
           <VariationList
             items={productData.variations}
             currentImageId={currentVariation}
-            setCurrentVariation={setCurrentVariation}
           />
         </div>
 

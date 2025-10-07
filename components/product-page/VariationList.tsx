@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { ProductSize, ProductVariation } from "@prisma/client";
 import Link from "next/link";
-import { Dispatch, SetStateAction } from "react";
 
 export type VariationsType = ProductVariation & {
   sizes: ProductSize[];
@@ -10,22 +9,16 @@ export type VariationsType = ProductVariation & {
 interface ItemVariationProps {
   items: VariationsType[];
   currentImageId: string;
-  setCurrentVariation: Dispatch<SetStateAction<string>>;
 }
 
 export default function VariationList({
   items,
   currentImageId,
-  setCurrentVariation,
 }: ItemVariationProps) {
   return (
     <div className="flex gap-2">
       {items.map((item) => (
-        <Link
-          key={item.id}
-          href={`/product/${item.id}`}
-          onClick={() => setCurrentVariation(item.id)}
-        >
+        <Link key={item.id} href={`/product/${item.id}`}>
           <Image
             src={item.thumbnailUrl}
             alt="Variations"
