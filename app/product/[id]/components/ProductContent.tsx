@@ -1,16 +1,15 @@
 "use client";
 
 import Button from "@/components/ui/Button";
-// import { useProducts } from "@/hooks/UseProducts";
 import {
   ProductWithCurrentVariation,
   ProductWithVariations,
 } from "@/model/ProductType";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import VariationList from "@/components/product-page/VariationList";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
+import VariationList from "@/components/product-page/VariationList";
 
 interface ProductContentProps {
   initialData: ProductWithCurrentVariation;
@@ -19,19 +18,15 @@ interface ProductContentProps {
 export default function ProductContent({ initialData }: ProductContentProps) {
   const router = useRouter();
   const { data: session } = useSession();
-  // const param = useParams();
   const [productData, setProductData] = useState<ProductWithVariations>();
-  // const [currentVariation, setCurrentVariation] = useState<string>(
-  //   param.id!.toString()
-  // );
-  const [selectedSize, setSelectedSize] = useState<string>("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [currentVariation, setCurrentVariation] = useState("");
+
   const [errorSizeMessage, setErrorSizeMessage] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingCart, setIsLoadingCart] = useState(false);
 
-  const productVariation = productData?.variations.find(
-    (variation) => variation.id === initialData.id
-  );
+  const productVariation = initialData.currentVariation;
 
   useEffect(() => {
     setProductData(initialData);
@@ -113,13 +108,13 @@ export default function ProductContent({ initialData }: ProductContentProps) {
   return (
     <div className="flex items-start justify-center gap-20 pt-20 pb-32">
       <div className="h-[500px] w-[500px] rounded-xl overflow-hidden">
-        {/* <Image
+        <Image
           className="rounded-xl hover:scale-110 transition-all duration-300"
           src={productVariation!.largeUrl}
           alt={productVariation!.alt}
           width={500}
           height={500}
-        /> */}
+        />
       </div>
 
       <div className="flex flex-col gap-6">
@@ -144,11 +139,11 @@ export default function ProductContent({ initialData }: ProductContentProps) {
         </div>
         <div className="flex flex-col gap-2">
           <h2>Coloris disponible</h2>
-          {/* <VariationList
+          <VariationList
             items={productData.variations}
             currentImageId={currentVariation}
             setCurrentVariation={setCurrentVariation}
-          /> */}
+          />
         </div>
 
         <div className="flex flex-col gap-4">
