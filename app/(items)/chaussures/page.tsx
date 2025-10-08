@@ -1,8 +1,9 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import ProductList from "../components/ProductList";
 import { ProductWithVariations } from "@/model/ProductType";
 
-const prisma = new PrismaClient();
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 export default async function ChaussuresPage() {
   const initialShoes: ProductWithVariations[] = await prisma.product.findMany({
