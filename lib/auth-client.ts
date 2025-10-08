@@ -1,7 +1,7 @@
 import { createAuthClient } from "better-auth/react";
 
 export const authClient = createAuthClient({
-  baseURL: "sneakhearts.sellyclement.dev",
+  baseURL: "https://sneakhearts.sellyclement.dev",
   fetchOptions: {
     credentials: "include",
   },
