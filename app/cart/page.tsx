@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import CartContent from "./components/CartContent";
-import EmptyCart from "./components/EmptyCart";
+import CartContent from "./_components/CartContent";
+import EmptyCart from "./_components/EmptyCart";
 
 const prisma = new PrismaClient();
 
