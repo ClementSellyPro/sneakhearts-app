@@ -1,5 +1,5 @@
 import { ProductWithCurrentVariation } from "@/model/ProductType";
-import ProductContent from "./components/ProductContent";
+import ProductContent from "./_components/ProductContent";
 import { PrismaClient } from "@prisma/client";
 import { notFound } from "next/navigation";
 
