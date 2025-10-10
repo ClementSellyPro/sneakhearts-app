@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Filter from "@/components/items-page/Filter";
+import Filter from "./Filter";
 import Image from "next/image";
 import { useProducts } from "@/hooks/UseProducts";
 

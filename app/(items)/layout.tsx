@@ -1,4 +1,4 @@
-import HeaderItemsPage from "@/components/items-page/HeaderItemsPage";
+import HeaderItemsPage from "./_components/HeaderItemsPage";
 
 export default function ItemsLayout({
   children,

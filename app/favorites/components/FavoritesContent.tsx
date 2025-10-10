@@ -1,6 +1,6 @@
 "use client";
 
-import FavoriteCard from "@/components/favorites/FavoriteCard";
+import FavoriteCard from "./FavoriteCard";
 import Link from "next/link";
 import { useEffect, useState, useTransition } from "react";
 import { Favorite } from "@/model/FavoriteType";

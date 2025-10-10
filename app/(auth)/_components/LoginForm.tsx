@@ -2,8 +2,8 @@
 
 import React from "react";
 import { useState } from "react";
-import Button from "../ui/Button";
-import { FormField } from "../ui/FormField";
+import Button from "../../../components/ui/Button";
+import { FormField } from "../../../components/ui/FormField";
 import { authClient } from "@/lib/auth-client";
 import * as z from "zod";
 

@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import ProductList from "../components/ProductList";
+import ProductList from "../_components/ProductList";
 import { ProductWithVariations } from "@/model/ProductType";
 
 export const dynamic = "force-dynamic";

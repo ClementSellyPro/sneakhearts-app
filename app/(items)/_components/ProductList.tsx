@@ -1,6 +1,6 @@
 "use client";
 
-import ItemCard from "@/components/items-page/ItemCard";
+import ItemCard from "./ItemCard";
 import { useGetProducts, useProducts } from "@/hooks/UseProducts";
 import { ProductWithVariations } from "@/model/ProductType";
 import { useEffect } from "react";

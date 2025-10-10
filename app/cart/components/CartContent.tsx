@@ -1,6 +1,6 @@
 "use client";
 
-import CartItem from "@/components/cart/CartItem";
+import CartItem from "./CartItem";
 import Button from "@/components/ui/Button";
 import { useSession } from "@/lib/auth-client";
 import { CartItemResponse } from "@/model/CarItemType";
