@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import FavoritesContent from "./components/FavoritesContent";
+import EmptyFavorites from "./components/EmptyFavorites";
 
 const prisma = new PrismaClient();
 
@@ -11,18 +12,7 @@ export default async function FavoritesPage() {
   });
 
   if (!session?.user) {
-    return (
-      <div className="text-center py-8">
-        <h2 className="text-2xl font-bold mb-4">Connexion requise</h2>
-        <p className="mb-4">Veuillez vous connecter pour voir vos favoris.</p>
-        <a
-          href="/login"
-          className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Se connecter
-        </a>
-      </div>
-    );
+    return <EmptyFavorites />;
   }
 
   const favoriteItems = await prisma.favorite.findMany({
