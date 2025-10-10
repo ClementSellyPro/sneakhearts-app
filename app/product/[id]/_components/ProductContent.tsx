@@ -125,7 +125,7 @@ export default function ProductContent({ initialData }: ProductContentProps) {
           </p>
           <h1 className="font-semibold text-2xl">{productData!.name}</h1>
           <p
-            className={`font-semibold text-lg ${
+            className={`text-2xl ${
               productVariation?.salePrice ? "text-red-500" : ""
             }`}
           >
