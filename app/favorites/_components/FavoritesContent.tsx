@@ -72,8 +72,9 @@ export default function FavoritesContent({
 
         {isAddingConfirmation && (
           <ModalConfirmation
-            confirmDeleting={confirmDeleting}
-            setIsAddingConfirmation={setIsAddingConfirmation}
+            message="Etes-vous sûr de vouloir retirer ce produit de vos favoris ?"
+            onConfirmation={confirmDeleting}
+            setAction={setIsAddingConfirmation}
           />
         )}
       </div>
