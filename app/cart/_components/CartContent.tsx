@@ -2,9 +2,7 @@
 
 import CartItem from "./CartItem";
 import Button from "@/components/ui/Button";
-import { useSession } from "@/lib/auth-client";
 import { CartItemResponse } from "@/model/CarItemType";
-import Link from "next/link";
 import { useState, useEffect, useTransition } from "react";
 import { deleteCartItemAction } from "../action";
 
@@ -13,7 +11,6 @@ interface CartContentProps {
 }
 
 export default function CartContent({ cartListData }: CartContentProps) {
-  const { data: session } = useSession();
   const [cartData, setCartData] = useState<CartItemResponse>();
   //eslint-disable-next-line
   const [isPending, startTransition] = useTransition();
@@ -65,21 +62,6 @@ export default function CartContent({ cartListData }: CartContentProps) {
             <p>Il n&apos;y a aucun article dans ton panier.</p>
           )}
         </div>
-
-        {!session?.user ? (
-          <p>
-            <Link href={"/login"} className="font-semibold hover:underline">
-              Se connecter
-            </Link>{" "}
-            ou{" "}
-            <Link href={"/register"} className="font-semibold hover:underline">
-              créer un compte
-            </Link>{" "}
-            pour ajouter des articles.
-          </p>
-        ) : (
-          ""
-        )}
       </div>
 
       <div className="flex flex-col gap-8 w-4/12">

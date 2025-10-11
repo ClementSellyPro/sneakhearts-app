@@ -1,10 +1,8 @@
 "use client";
 
 import FavoriteCard from "./FavoriteCard";
-import Link from "next/link";
 import { useEffect, useState, useTransition } from "react";
 import { Favorite } from "@/model/FavoriteType";
-import { useSession } from "@/lib/auth-client";
 import deleteFavoriteItemAction from "../action";
 import ModalConfirmation from "@/components/shared/ModalConfirmation";
 
@@ -15,7 +13,6 @@ interface favoritesContentProps {
 export default function FavoritesContent({
   favoritesListData,
 }: favoritesContentProps) {
-  const { data: session } = useSession();
   const [favoritesData, setFavoritesData] = useState<Favorite[]>([]);
   //eslint-disable-next-line
   const [isPending, startTransition] = useTransition();
@@ -79,19 +76,6 @@ export default function FavoritesContent({
             setIsAddingConfirmation={setIsAddingConfirmation}
           />
         )}
-
-        {!session?.user ? (
-          <p>
-            <Link href={"/login"} className="font-semibold hover:underline">
-              Se connecter
-            </Link>{" "}
-            ou{" "}
-            <Link href={"/register"} className="font-semibold hover:underline">
-              créer un compte
-            </Link>{" "}
-            pour ajouter des articles.
-          </p>
-        ) : null}
       </div>
     </div>
   );
