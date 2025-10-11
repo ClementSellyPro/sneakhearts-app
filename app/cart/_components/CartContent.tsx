@@ -5,6 +5,7 @@ import Button from "@/components/ui/Button";
 import { CartItemResponse } from "@/model/CarItemType";
 import { useState, useEffect, useTransition } from "react";
 import { deleteCartItemAction } from "../action";
+import ModalConfirmation from "@/components/shared/ModalConfirmation";
 
 interface CartContentProps {
   cartListData: CartItemResponse;
@@ -14,26 +15,36 @@ export default function CartContent({ cartListData }: CartContentProps) {
   const [cartData, setCartData] = useState<CartItemResponse>();
   //eslint-disable-next-line
   const [isPending, startTransition] = useTransition();
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [idToDelete, setIdToDelete] = useState("");
 
-  function handleDelete(cartItemId: string) {
+  function handleDelete(id: string) {
+    setIsDeleting(true);
+    setIdToDelete(id);
+  }
+
+  function confirmDeleting() {
     setCartData((prev) => {
       if (!prev) return prev;
       return {
         ...prev,
-        cartItems: prev.cartItems.filter((item) => item.id !== cartItemId),
+        cartItems: prev.cartItems.filter((item) => item.id !== idToDelete),
         itemCount: prev.itemCount,
         total:
           prev.total -
-          (prev.cartItems.find((i) => i.id === cartItemId)?.subtotal ?? 0),
+          (prev.cartItems.find((i) => i.id === idToDelete)?.subtotal ?? 0),
       };
     });
 
     startTransition(async () => {
       try {
-        await deleteCartItemAction(cartItemId);
+        await deleteCartItemAction(idToDelete);
       } catch (error) {
         console.error("Error:", error);
         alert("Erreur lors de la suppression");
+      } finally {
+        setIsDeleting(false);
+        setIdToDelete("");
       }
     });
   }
@@ -53,7 +64,7 @@ export default function CartContent({ cartListData }: CartContentProps) {
           {cartData.cartItems.length > 0 ? (
             cartData.cartItems.map((item) => (
               <CartItem
-                onDeleteCartItem={handleDelete}
+                onDeleteCartItem={() => handleDelete(item.id)}
                 key={item.id}
                 cartItemData={item}
               />
@@ -109,6 +120,14 @@ export default function CartContent({ cartListData }: CartContentProps) {
 
         <Button>Paiement</Button>
       </div>
+
+      {isDeleting && (
+        <ModalConfirmation
+          message="Etes-vous sûr de vouloir retirer ce produit de votre panier ?"
+          onConfirmation={confirmDeleting}
+          setAction={setIsDeleting}
+        />
+      )}
     </div>
   );
 }
