@@ -1,17 +1,34 @@
+"use client";
+
 import Image from "next/image";
 import { User, Heart, ShoppingCart, LogOut } from "lucide-react";
 import Link from "next/link";
 import { authClient, useSession } from "@/lib/auth-client";
+import { useState } from "react";
 
 export default function Header() {
   const { data: session } = useSession();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   function onLogout() {
     authClient.signOut();
   }
 
+  function toggleMobileMenu() {
+    setIsMobileMenuOpen((prev) => !prev);
+  }
+
   return (
-    <header className="flex items-center justify-between px-12 bg-white w-full border-b border-gray-200">
+    <header className="flex items-center justify-between md:h-20 h-14 md:px-12 px-6 bg-white w-full border-b border-gray-200">
+      <Image
+        src="/icon/menu.png"
+        width={30}
+        height={30}
+        alt="Menu"
+        priority
+        className="cursor-pointer block md:hidden"
+        onClick={toggleMobileMenu}
+      />
       <Link href={"/"}>
         <Image
           src="/logo/logo_sneakhearts.svg"
@@ -19,18 +36,22 @@ export default function Header() {
           height={60}
           alt="Logo"
           priority
-          className="cursor-pointer"
+          className="cursor-pointer w-10 md:w-14"
         />
       </Link>
-      <nav>
-        <ul className="flex gap-12 text-xl font-medium">
+      <nav
+        className={` ${
+          isMobileMenuOpen ? "block" : "hidden"
+        } fixed top-14 left-0 md:static w-full md:w-fit py-8 md:py-0 z-50 text-center bg-white`}
+      >
+        <ul className="flex md:flex-row flex-col gap-12 text-xl font-medium">
           <Link href={"/chaussures"}>
             <li className="nav-item">Chaussures</li>
           </Link>
           <Link href={"/vetements"}>
             <li className="nav-item">Vêtements</li>
           </Link>
-          <li className="flex gap-2 items-center cursor-default">
+          <li className="flex gap-2 items-center md:justify-start justify-center cursor-default">
             <span className="opacity-75">Accessoires</span>
             <span className="font-light text-xs w-fit text-red-500">
               Arrive bientôt
