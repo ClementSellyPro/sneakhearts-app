@@ -18,6 +18,10 @@ export default function Header() {
     setIsMobileMenuOpen((prev) => !prev);
   }
 
+  document.addEventListener("scroll", () => {
+    setIsMobileMenuOpen(false);
+  });
+
   return (
     <header className="flex items-center justify-between md:h-20 h-14 md:px-12 px-6 bg-white w-full border-b border-gray-200">
       <Image
@@ -42,7 +46,7 @@ export default function Header() {
       <nav
         className={` ${
           isMobileMenuOpen ? "block" : "hidden"
-        } fixed top-14 left-0 md:static w-full md:w-fit py-8 md:py-0 z-50 text-center bg-white`}
+        } md:block fixed top-14 left-0 md:static w-full md:w-fit py-8 md:py-0 z-50 text-center bg-white transition-all duration-300`}
       >
         <ul className="flex md:flex-row flex-col gap-12 text-xl font-medium">
           <Link href={"/chaussures"}>
