@@ -4,11 +4,21 @@ import Image from "next/image";
 import { User, Heart, ShoppingCart, LogOut } from "lucide-react";
 import Link from "next/link";
 import { authClient, useSession } from "@/lib/auth-client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Header() {
   const { data: session } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    function handleScroll() {
+      setIsMobileMenuOpen(false);
+    }
+
+    document.addEventListener("scroll", handleScroll);
+
+    return document.removeEventListener("scroll", handleScroll);
+  }, []);
 
   function onLogout() {
     authClient.signOut();
@@ -17,10 +27,6 @@ export default function Header() {
   function toggleMobileMenu() {
     setIsMobileMenuOpen((prev) => !prev);
   }
-
-  document.addEventListener("scroll", () => {
-    setIsMobileMenuOpen(false);
-  });
 
   return (
     <header className="flex items-center justify-between md:h-20 h-14 md:px-12 px-6 bg-white w-full border-b border-gray-200">
