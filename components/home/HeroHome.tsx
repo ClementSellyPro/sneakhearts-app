@@ -4,7 +4,7 @@ export default function HeroHome() {
   return (
     <div className="relative w-full h-[calc(100vh-4rem)] overflow-hidden">
       <Image
-        src="/video/background.jpg"
+        src="/video/background.png"
         alt="Background image"
         width={1810}
         height={1010}
