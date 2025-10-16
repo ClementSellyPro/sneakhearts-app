@@ -17,7 +17,9 @@ export default function Header() {
 
     document.addEventListener("scroll", handleScroll);
 
-    return document.removeEventListener("scroll", handleScroll);
+    return () => {
+      document.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   function onLogout() {
