@@ -6,7 +6,7 @@ export default function ItemsLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="px-12 py-4">
+    <div className="px-6 md:px-12 py-2 md:py-4">
       <HeaderItemsPage />
       {children}
     </div>

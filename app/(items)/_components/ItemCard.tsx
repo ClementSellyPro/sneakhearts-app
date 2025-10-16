@@ -46,10 +46,10 @@ export default function ItemCard({ product, category }: ItemCardProps) {
           ) : null}
         </div>
         <div className="flex flex-col gap-2 pt-4 group-hover:pt-1 group-hover:absolute -bottom-14 group-hover:z-20 bg-white w-full">
-          <p className="text-sm text-gray-400 group-hover:hidden">
+          <p className="text-sm text-gray-400 md:group-hover:hidden">
             {category === "Shoes" ? "Chaussure" : "Vêtement"} {gender}
           </p>
-          <div className="hidden group-hover:block">
+          <div className="hidden md:group-hover:block">
             <ItemMiniatureVariation
               items={product.variations}
               currentImage={currentVariation.largeUrl}
