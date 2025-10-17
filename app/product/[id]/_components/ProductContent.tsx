@@ -107,7 +107,7 @@ export default function ProductContent({ initialData }: ProductContentProps) {
   }
 
   return (
-    <div className="flex flex-col md:flex-row items-start justify-center gap-8 md:gap-12 lg:gap-20 pt-12 md:pt-20 pb-32 px-6 md:px-12">
+    <div className="flex flex-col md:flex-row items-start justify-center gap-8 lg:gap-20 pt-12 md:pt-20 pb-32 px-6 md:px-12">
       <div className="md:h-[500px] w-[100%] md:w-[500px] rounded-xl overflow-hidden">
         <Image
           className="rounded-xl hover:scale-110 transition-all duration-300"

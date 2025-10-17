@@ -18,7 +18,7 @@ export default function SizeSelector({
   return (
     <div className="flex flex-col gap-4">
       <h2>Sélectionner la taille</h2>
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-4 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {productSizes.map((size) => (
           <div
             key={size.id}
