@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import Button from "../ui/Button";
 
 export default function HeroHome() {
   return (
@@ -23,11 +25,19 @@ export default function HeroHome() {
         <source src="/video/background.mp4" type="video/mp4" />
       </video>
 
-      <div className="absolute left-6 md:left-14 bottom-[20%] z-10 text-white">
-        <p className="text-6xl md:text-8xl font-bold">Sneakhearts</p>
-        <p className="text-base md:text-xl">
-          Chosis ton style. Choisis Sneakhearts.
-        </p>
+      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 lg:gap-24 absolute left-6 md:left-14 bottom-[20%] z-10 text-white">
+        <div className="mb-8">
+          <p className="text-6xl md:text-8xl font-bold">Sneakhearts</p>
+          <p className="text-base md:text-xl">
+            Chosis ton style. Choisis Sneakhearts.
+          </p>
+        </div>
+        <Link
+          href={"/chaussures"}
+          className="block lg:hidden w-fit bg-white/50 p-0.5 rounded-full"
+        >
+          <Button>Découvrir</Button>
+        </Link>
       </div>
     </div>
   );
