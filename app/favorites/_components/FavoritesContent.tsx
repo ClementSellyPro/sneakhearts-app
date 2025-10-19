@@ -49,11 +49,11 @@ export default function FavoritesContent({
   }
 
   return (
-    <div className="flex justify-between h-screen px-52 py-18">
+    <div className="flex justify-between h-screen px-6 lg:px-24 xl:px-52 py-6 lg:py-18">
       <div className="flex flex-col gap-4">
-        <h1 className="text-xl font-semibold">Articles Favoris</h1>
+        <h1 className="text-2xl lg:text-4xl font-semibold">VOS FAVORIS</h1>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {favoritesData.length > 0 ? (
             favoritesData.map((fav) => (
               <FavoriteCard
