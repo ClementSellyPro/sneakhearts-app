@@ -25,7 +25,7 @@ export default function FavoriteCard({
   return (
     <div
       onClick={handleRedirection}
-      className="relative flex gap-4 items-start pr-4 border rounded-xl  text-gray-200 border-gray-300 overflow-hidden cursor-pointer hover:border-gray-500"
+      className="relative flex gap-4 items-start pr-4 border rounded-xl  text-gray-200 border-gray-300 overflow-hidden cursor-pointer hover:border-gray-500 w-full"
     >
       <Image
         src={favorite.largeImage!}
@@ -41,7 +41,7 @@ export default function FavoriteCard({
         <span className="font-semibold">{favorite.currentPrice}</span>
 
         <button
-          className="absolute bottom-2 right-2 w-fit px-4 text-sm border rounded-full border-red-500 hover:text-red-500"
+          className="absolute bottom-2 right-2 w-fit px-4 text-sm border rounded-full border-red-500 hover:text-red-500 bg-white"
           type="button"
           onClick={(e) => {
             e.stopPropagation();
