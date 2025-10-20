@@ -36,7 +36,8 @@ export default function ProductContent({ initialData }: ProductContentProps) {
 
   if (!productData) return <p>Chargement...</p>;
 
-  function onSelectSize(size: string) {
+  function onSelectSize(size: string, inStock: boolean) {
+    if (!inStock) return;
     setSelectedSize(size);
     setErrorSizeMessage(null);
   }

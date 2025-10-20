@@ -5,7 +5,7 @@ import { ProductSize } from "@prisma/client";
 interface sizeSelectorProps {
   productSizes: ProductSize[];
   selectedSize: string;
-  onSelectSize: (size: string) => void;
+  onSelectSize: (size: string, inStock: boolean) => void;
   errorSizeMessage: null | string;
 }
 
@@ -22,9 +22,10 @@ export default function SizeSelector({
         {productSizes.map((size) => (
           <div
             key={size.id}
-            onClick={() => onSelectSize(size.size)}
+            onClick={() => onSelectSize(size.size, size.inStock)}
             className={`border border-gray-300 rounded-md w-fit py-1.5 px-8 cursor-pointer hover:bg-black hover:text-white ${
-              !size.inStock && "line-through bg-gray-100 opacity-60"
+              !size.inStock &&
+              "line-through bg-gray-100 opacity-60 hover:cursor-not-allowed"
             }  ${
               selectedSize === size.size
                 ? "bg-black text-white font-semibold"
