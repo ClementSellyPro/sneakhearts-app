@@ -22,6 +22,10 @@ export default function Header() {
     };
   }, []);
 
+  function closeMobileMenu() {
+    setIsMobileMenuOpen(false);
+  }
+
   function onLogout() {
     authClient.signOut();
   }
@@ -57,14 +61,14 @@ export default function Header() {
         } md:block fixed top-14 left-0 md:static w-full md:w-fit py-8 md:py-0 z-50 text-center bg-white transition-all duration-300`}
       >
         <ul className="flex md:flex-row flex-col gap-12 text-xl font-medium">
-          <Link href={"/chaussures"}>
+          <Link href={"/chaussures"} onClick={closeMobileMenu}>
             <li className="nav-item">Chaussures</li>
           </Link>
-          <Link href={"/vetements"}>
+          <Link href={"/vetements"} onClick={closeMobileMenu}>
             <li className="nav-item">Vêtements</li>
           </Link>
           <li className="flex gap-2 items-center md:justify-start justify-center cursor-default">
-            <span className="opacity-75">Accessoires</span>
+            <span className="opacity-50">Accessoires</span>
             <span className="font-light text-xs w-fit text-red-500">
               Arrive bientôt
             </span>
