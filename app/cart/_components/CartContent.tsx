@@ -6,6 +6,7 @@ import { CartItemResponse } from "@/model/CarItemType";
 import { useState, useEffect, useTransition } from "react";
 import { deleteCartItemAction } from "../action";
 import ModalConfirmation from "@/components/shared/ModalConfirmation";
+import Loading from "../loading";
 
 interface CartContentProps {
   cartListData: CartItemResponse;
@@ -54,7 +55,12 @@ export default function CartContent({ cartListData }: CartContentProps) {
     //eslint-disable-next-line
   }, []);
 
-  if (!cartData) return <div>Chargement...</div>;
+  if (!cartData)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
 
   return (
     <div className="flex flex-col md:flex-row justify-between gap-18 min-h-screen px-6 md:px-24 lg:px-48 py-12 md:py-18 w-full">
