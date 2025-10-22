@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
+model User {
   id            String    @id
   name          String
   email         String    @unique
@@ -16,15 +16,16 @@ model user {
   createdAt     DateTime
   updatedAt     DateTime
 
-  accounts account[]
-  sessions session[]
+  accounts Account[]
+  sessions Session[]
   favorites Favorite[] 
   cartItems CartItem[]
+  orders Order[]
 
   @@map("users")
 }
 
-model account {
+model Account {
   id                String   @id
   accountId         String
   providerId        String
@@ -39,11 +40,11 @@ model account {
   createdAt         DateTime
   updatedAt         DateTime
 
-  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@map("accounts")
 }
 
-model session {
+model Session {
   id           String   @id
   token        String
   userId       String
@@ -53,22 +54,11 @@ model session {
   createdAt    DateTime
   updatedAt    DateTime
 
-  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@map("sessions")
 }
 
-model verification {
-  id         String   @id
-  identifier String
-  value      String   @unique
-  expiresAt  DateTime
-  createdAt  DateTime
-  updatedAt  DateTime?
-
-  @@map("verifications")
-}
-
-// models for the products
+/////////////////// Models for the products  ///////////////////
 model Product {
   id        String   @id @default(cuid())
   productId String   @unique
@@ -125,7 +115,7 @@ model Favorite {
   productId String
   createdAt DateTime @default(now())
 
-  user    user    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@unique([userId, productId])
@@ -142,9 +132,42 @@ model CartItem {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  user      user             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   variation ProductVariation @relation(fields: [variationId], references: [id], onDelete: Cascade)
 
   @@unique([userId, variationId, size])
   @@map("cart_items")
+}
+
+
+/////////////////// Models for Orders ///////////////////
+model Order {
+  id              String      @id @default(cuid())
+  userId          String
+  stripeSessionId String      @unique
+  status          String      
+  totalAmount     Float
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[]
+  
+  @@map("orders")
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  orderId     String
+  variationId String
+  size        String
+  quantity    Int
+  price       Float
+  productName String
+  colorway    String
+  imageUrl    String
+  
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  
+  @@map("order_items")
 }
