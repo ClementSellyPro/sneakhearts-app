@@ -1,12 +1,12 @@
 "use client";
 
 import CartItem from "./CartItem";
-import Button from "@/components/ui/Button";
 import { CartItemResponse } from "@/model/CarItemType";
 import { useState, useEffect, useTransition } from "react";
 import { deleteCartItemAction } from "../action";
 import ModalConfirmation from "@/components/shared/ModalConfirmation";
 import Loading from "../loading";
+import CheckoutButton from "./CheckoutButton";
 
 interface CartContentProps {
   cartListData: CartItemResponse;
@@ -124,7 +124,7 @@ export default function CartContent({ cartListData }: CartContentProps) {
           </p>
         </div>
 
-        <Button>Paiement</Button>
+        <CheckoutButton />
       </div>
 
       {isDeleting && (

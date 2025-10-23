@@ -21,6 +21,8 @@ export default function CheckoutButton() {
       if (!response.ok) {
         throw new Error(data.error || "Erreur pour créer un session checkout");
       }
+
+      window.location.href = data.url;
     } catch (error) {
       console.error("Erreur :", error);
     } finally {

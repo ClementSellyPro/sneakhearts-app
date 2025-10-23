@@ -30,11 +30,10 @@ export async function POST(req: NextRequest) {
 
     const lineItems = cartItems.map((item) => ({
       price_data: {
-        currency: "eu",
+        currency: "eur",
         product_data: {
           name: `${item.variation.product.name} - ${item.variation.colorway}`,
           description: `Size: ${item.size}`,
-          images: [item.variation.largeUrl],
         },
         unit_amount: Math.round(item.price * 100),
       },
@@ -46,14 +45,7 @@ export async function POST(req: NextRequest) {
       0
     );
 
-    const order = await prisma.order.create({
-      data: {
-        userId,
-        stripeSessionId: "",
-        status: "pending",
-        totalAmount,
-      },
-    });
+    console.log("Stripe line items:", lineItems);
 
     const checkoutSession = await stripe.checkout.sessions.create({
       customer_email: session.user.email,
@@ -63,13 +55,8 @@ export async function POST(req: NextRequest) {
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/cart`,
       metadata: {
         userId,
-        orderId: order.id,
+        totalAmount: totalAmount.toString(),
       },
-    });
-
-    await prisma.order.update({
-      where: { id: order.id },
-      data: { stripeSessionId: checkoutSession.id },
     });
 
     return NextResponse.json({ url: checkoutSession.url });
