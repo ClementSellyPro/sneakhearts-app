@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import CartContent from "./_components/CartContent";
 import EmptyCart from "./_components/EmptyCart";
+import OrderHistory from "./_components/OrderHistory";
 
 const prisma = new PrismaClient();
 
@@ -59,5 +60,10 @@ export default async function Cart() {
     itemCount,
   };
 
-  return <CartContent cartListData={cartData} />;
+  return (
+    <div>
+      <CartContent cartListData={cartData} />
+      <OrderHistory />
+    </div>
+  );
 }
