@@ -10,7 +10,7 @@ export default async function OrderHistory() {
   const orders = await prisma.order.findMany({
     where: {
       userId: session.user.id,
-      status: "pending",
+      status: "paid",
     },
     include: {
       orderItems: true,
