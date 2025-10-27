@@ -10,7 +10,7 @@ export default async function OrderHistory() {
   const orders = await prisma.order.findMany({
     where: {
       userId: session.user.id,
-      status: "paid",
+      status: "pending",
     },
     include: {
       orderItems: true,
@@ -26,6 +26,12 @@ export default async function OrderHistory() {
   return (
     <div className="py-8">
       <p className="text-2xl font-semibold">Historique des commandes</p>
+      {orders.length > 0 &&
+        orders.map((order) => (
+          <div key={order.id} className="border w-52 h-60 p-4 rounded-xl">
+            <p>{order.totalAmount}</p>
+          </div>
+        ))}
     </div>
   );
 }

@@ -63,7 +63,7 @@ export default function CartContent({ cartListData }: CartContentProps) {
     );
 
   return (
-    <div className="flex flex-col md:flex-row justify-between gap-18  min-h-screen px-6 md:px-24 lg:px-48 py-12 md:py-18 w-full">
+    <div className="flex flex-col md:flex-row justify-between gap-18">
       <div className="flex flex-col gap-12 w-full md:w-7/12">
         <h1 className="text-3xl font-semibold text-center">VOTRE PANIER:</h1>
         <div className="flex flex-col gap-4">

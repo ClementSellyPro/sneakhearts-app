@@ -61,7 +61,7 @@ export default async function Cart() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen px-6 md:px-24 lg:px-48 py-12 md:py-18 w-full">
       <CartContent cartListData={cartData} />
       <OrderHistory />
     </div>
