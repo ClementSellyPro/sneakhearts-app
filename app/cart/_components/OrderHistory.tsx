@@ -21,17 +21,46 @@ export default async function OrderHistory() {
     take: 5,
   });
 
-  console.log(orders);
-
   return (
-    <div className="py-8">
-      <p className="text-2xl font-semibold">Historique des commandes</p>
-      {orders.length > 0 &&
-        orders.map((order) => (
-          <div key={order.id} className="border w-52 h-60 p-4 rounded-xl">
-            <p>{order.totalAmount}</p>
-          </div>
-        ))}
+    <div className="pt-20">
+      <p className="text-2xl font-semibold pb-4">Historique des commandes</p>
+      <div className="flex flex-col md:flex-row gap-4 overflow-auto">
+        {orders.length > 0 &&
+          orders.map((order) => (
+            <div
+              key={order.id}
+              className="flex flex-col gap-4 border w-full md:w-fit min-h-60 p-4 rounded-xl"
+            >
+              <div className="flex-1">
+                {order.orderItems.map((item) => (
+                  <div key={item.id}>
+                    <div className="flex justify-between items-center">
+                      <p>{item.productName}</p>
+                      <p>Quantité: {item.quantity}</p>
+                    </div>
+                    <div className="flex justify-end">
+                      <p>{(item.price * item.quantity).toFixed(2)}$</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="border-t">
+                <p className="font-semibold">
+                  {new Date(order.createdAt).toLocaleDateString()}
+                </p>
+                <p>
+                  <span className="font-semibold">Total:</span>
+                  {order.totalAmount.toFixed(2)}€
+                </p>
+                <p>
+                  <span className="font-semibold">Status:</span>{" "}
+                  {order.status === "paid" ? "Payé" : "En cours de paiement"}
+                </p>
+              </div>
+            </div>
+          ))}
+      </div>
     </div>
   );
 }
