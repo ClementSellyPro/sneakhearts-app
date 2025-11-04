@@ -5,10 +5,12 @@ import { User, Heart, ShoppingCart, LogOut } from "lucide-react";
 import Link from "next/link";
 import { authClient, useSession } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const { data: session } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     function handleScroll() {
@@ -28,6 +30,8 @@ export default function Header() {
 
   function onLogout() {
     authClient.signOut();
+    router.push("/");
+    router.refresh();
   }
 
   function toggleMobileMenu() {
