@@ -38,7 +38,7 @@ export default function CartItem({
         <p className="text-sm text-gray-500">{cartItemData.product.brand}</p>
       </div>
       <div className="flex justify-center items-center font-semibold">
-        <p className="p-4">{cartItemData.currentPrice}$</p>
+        <p className="p-4">{cartItemData.currentPrice}€</p>
       </div>
 
       <div className="button-delete flex justify-center items-center font-semibold p-4">

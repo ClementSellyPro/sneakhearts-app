@@ -71,7 +71,7 @@ export default function ItemCard({ product, category }: ItemCardProps) {
                   {currentVariation.price}{" "}
                 </span>
               )}
-              {currentVariation.salePrice || currentVariation.price}$
+              {currentVariation.salePrice || currentVariation.price}€
             </p>
           </div>
         </div>

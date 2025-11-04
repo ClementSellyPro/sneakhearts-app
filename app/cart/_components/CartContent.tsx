@@ -95,7 +95,7 @@ export default function CartContent({ cartListData }: CartContentProps) {
                     x {item.quantity}
                   </span>
                 </p>
-                <p>{item.currentPrice}$</p>
+                <p>{item.currentPrice}€</p>
               </div>
             ))}
           </div>
@@ -120,7 +120,7 @@ export default function CartContent({ cartListData }: CartContentProps) {
         <div className="flex justify-between text-xl py-4 border-t border-b font-semibold">
           <p>Total</p>
           <p>
-            {cartData.itemCount > 0 ? cartData.total.toFixed(2) + "$" : "---"}
+            {cartData.itemCount > 0 ? cartData.total.toFixed(2) + "€" : "---"}
           </p>
         </div>
 

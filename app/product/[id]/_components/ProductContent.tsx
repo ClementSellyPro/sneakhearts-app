@@ -130,11 +130,11 @@ export default function ProductContent({ initialData }: ProductContentProps) {
               productVariation?.salePrice ? "text-red-500" : ""
             }`}
           >
-            {productVariation?.salePrice ?? productVariation?.price}$
+            {productVariation?.salePrice ?? productVariation?.price}€
             <span className="text-sm text-black line-through">
               {" "}
               {productVariation?.salePrice
-                ? productVariation?.price + "$"
+                ? productVariation?.price + "€"
                 : null}
             </span>
           </p>
